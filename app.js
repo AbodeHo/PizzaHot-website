@@ -1,0 +1,863 @@
+/**
+ * Pizza Hot - Interactive Menu Engine
+ * Built for a professional, premium experience.
+ */
+
+const menuData = [
+  // Categories: vegetables, chicken, hot_meats, cold_meats, choice, appetizers, salads, sauces, drinks
+
+  // -- Vegetables --
+  {
+    id: 1,
+    category: "vegetables",
+    name_ar: "الفصول الأربعة",
+    name_en: "Four Seasons",
+    desc_ar: "فليفلة، بندورة، زيتون، فطر",
+    desc_en: "Peppers, Tomatoes, Olives, Mushrooms",
+    prices: { small: 570, medium: 820, large: 1140 },
+    image: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?q=80&w=1000"
+  },
+  {
+    id: 2,
+    category: "vegetables",
+    name_ar: "فطر",
+    name_en: "Mushroom",
+    desc_ar: "صوص، جبنة، فطر",
+    desc_en: "Sauce, Cheese, Mushroom",
+    prices: { small: 570, medium: 820, large: 1140 },
+    image: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?q=80&w=1000"
+  },
+  {
+    id: 3,
+    category: "vegetables",
+    name_ar: "ذرة",
+    name_en: "Corn",
+    desc_ar: "صوص، جبنة، ذرة",
+    desc_en: "Sauce, Cheese, Corn",
+    prices: { small: 570, medium: 820, large: 1140 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+  {
+    id: 4,
+    category: "vegetables",
+    name_ar: "مارغريتا",
+    name_en: "Margherita",
+    desc_ar: "صوص، جبنة",
+    desc_en: "Sauce, Cheese",
+    prices: { small: 570, medium: 820, large: 1140 },
+    image: "https://images.unsplash.com/photo-1574071318508-1cdbad80ad38?q=80&w=1000"
+  },
+  {
+    id: 5,
+    category: "vegetables",
+    name_ar: "فور تشيز",
+    name_en: "Four Cheese",
+    desc_ar: "أربع أنواع جبنة (بلو تشيز، بارميزان، تشيدر، موزاريلا)",
+    desc_en: "Four types of cheese (Blue cheese, Parmesan, Cheddar, Mozzarella)",
+    prices: { small: 730, medium: 1060, large: 1460 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+
+  // -- Chicken --
+  {
+    id: 6,
+    category: "chicken",
+    name_ar: "شيش طاووق",
+    name_en: "Shish Taouk",
+    desc_ar: "صوص، جبنة، شيش طاووق",
+    desc_en: "Sauce, Cheese, Shish Taouk",
+    prices: { small: 730, medium: 1060, large: 1460 },
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1000"
+  },
+  {
+    id: 7,
+    category: "chicken",
+    name_ar: "باربيكيو",
+    name_en: "BBQ",
+    desc_ar: "صوص الباربيكيو، جبنة، قطع دجاج، فطر",
+    desc_en: "BBQ Sauce, Cheese, Chicken chunks, Mushroooms",
+    prices: { small: 730, medium: 1060, large: 1460 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+  {
+    id: 8,
+    category: "chicken",
+    name_ar: "مكسيكي",
+    name_en: "Mexican",
+    desc_ar: "صوص، جبنة، قطع دجاج حارة، فليفلة، بصل، بهارات مكسيكي",
+    desc_en: "Sauce, Cheese, Spicy chicken, Peppers, Onions, Mexican spices",
+    prices: { small: 730, medium: 1060, large: 1460 },
+    image: "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?q=80&w=1000"
+  },
+  {
+    id: 9,
+    category: "chicken",
+    name_ar: "رانش (عادي أو سبايسي)",
+    name_en: "Ranch (Normal or Spicy)",
+    desc_ar: "صوص الرانش، جبنة، قطع دجاج، حبش مدخن",
+    desc_en: "Ranch Sauce, Cheese, Chicken chunks, Smoked Turkey",
+    prices: { small: 730, medium: 1060, large: 1460 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+
+  // -- Hot Meats --
+  {
+    id: 10,
+    category: "hot_meats",
+    name_ar: "سجق",
+    name_en: "Sausage",
+    desc_ar: "صوص، جبنة، فطر، سجق",
+    desc_en: "Sauce, Cheese, Mushroom, Sausage",
+    prices: { small: 730, medium: 1060, large: 1460 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+  {
+    id: 11,
+    category: "hot_meats",
+    name_ar: "فيلادلفيا ستيك",
+    name_en: "Philadelphia Steak",
+    desc_ar: "صوص الفيلادلفيا، جبنة، بصل، شرائح لحمة، فطر فريش، فليفلة",
+    desc_en: "Philadelphia Sauce, Cheese, Onion, Meat slices, Fresh Mushroom, Peppers",
+    prices: { small: 730, medium: 1060, large: 1460 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+  {
+    id: 12,
+    category: "hot_meats",
+    name_ar: "سوبريم",
+    name_en: "Supreme",
+    desc_ar: "صوص، جبنة، لحم مفروم، بيبيروني، فطر، فليفلة، زيتون",
+    desc_en: "Sauce, Cheese, Minced meat, Pepperoni, Mushroom, Peppers, Olives",
+    prices: { small: 730, medium: 1060, large: 1460 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+
+  // -- Cold Meats --
+  {
+    id: 13,
+    category: "cold_meats",
+    name_ar: "سلامي",
+    name_en: "Salami",
+    desc_ar: "صوص، جبنة، سلامي",
+    desc_en: "Sauce, Cheese, Salami",
+    prices: { small: 680, medium: 1020, large: 1360 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+  {
+    id: 14,
+    category: "cold_meats",
+    name_ar: "بيبيروني",
+    name_en: "Pepperoni",
+    desc_ar: "صوص، جبنة، بيبيروني",
+    desc_en: "Sauce, Cheese, Pepperoni",
+    prices: { small: 680, medium: 1020, large: 1360 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+  {
+    id: 15,
+    category: "cold_meats",
+    name_ar: "هوت دوغ",
+    name_en: "Hot Dog",
+    desc_ar: "صوص، جبنة، هوت دوغ",
+    desc_en: "Sauce, Cheese, Hot Dog",
+    prices: { small: 680, medium: 1020, large: 1360 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+  {
+    id: 16,
+    category: "cold_meats",
+    name_ar: "حبش مدخن",
+    name_en: "Smoked Turkey",
+    desc_ar: "صوص، جبنة، حبش مدخن",
+    desc_en: "Sauce, Cheese, Smoked Turkey",
+    prices: { small: 680, medium: 1020, large: 1360 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+  {
+    id: 17,
+    category: "cold_meats",
+    name_ar: "روستو بقر مدخن",
+    name_en: "Smoked Beef Roast",
+    desc_ar: "صوص، جبنة، روستو بقر",
+    desc_en: "Sauce, Cheese, Smoked Beef Roast",
+    prices: { small: 780, medium: 1140, large: 1560 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+  {
+    id: 18,
+    category: "cold_meats",
+    name_ar: "لحومات باردة",
+    name_en: "Mixed Cold Meats",
+    desc_ar: "صوص، جبنة، سلامي، بيبيروني، هوت دوغ، حبش مدخن",
+    desc_en: "Sauce, Cheese, Salami, Pepperoni, Hot Dog, Smoked Turkey",
+    prices: { small: 780, medium: 1140, large: 1560 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+
+  // -- Choice --
+  {
+    id: 19,
+    category: "choice",
+    name_ar: "بيتزا كل نصف شكل",
+    name_en: "Half and Half Pizza",
+    desc_ar: "حسب الطلب",
+    desc_en: "As per order",
+    prices: { small: 730, medium: 1060, large: 1460 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+  {
+    id: 20,
+    category: "choice",
+    name_ar: "بيتزا كل ثلث شكل",
+    name_en: "Third and Third Pizza",
+    desc_ar: "صوص، جبنة، هوت دوغ، شيش، سجق",
+    desc_en: "Sauce, Cheese, Hot Dog, Shish, Sausage",
+    prices: { small: 780, medium: 1140, large: 1560 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+  {
+    id: 21,
+    category: "choice",
+    name_ar: "بيتزا كل ربع شكل",
+    name_en: "Quarter and Quarter Pizza",
+    desc_ar: "صوص، جبنة، هوت دوغ، حبش، بيبيروني، ذرة",
+    desc_en: "Sauce, Cheese, Hot Dog, Turkey, Pepperoni, Corn",
+    prices: { small: 780, medium: 1140, large: 1560 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+  {
+    id: 22,
+    category: "choice",
+    name_ar: "لحومات ساخنة كل ثلث شكل",
+    name_en: "Hot Meats (Third and Third)",
+    desc_ar: "حسب الطلب",
+    desc_en: "As per order",
+    prices: { small: 830, medium: 1240, large: 1660 },
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000"
+  },
+
+  // -- Appetizers --
+  {
+    id: 23,
+    category: "appetizers",
+    name_ar: "بطاطا بالجبنة",
+    name_en: "Cheese Fries",
+    desc_ar: "بطاطا، جبنة موزاريلا، صوص أبيض، بهارات",
+    desc_en: "Fries, Mozzarella, White sauce, Spices",
+    price: 380,
+    image: "https://images.unsplash.com/photo-1518013031185-167814cc5290?q=80&w=1000"
+  },
+  {
+    id: 24,
+    category: "appetizers",
+    name_ar: "بطاطا بالباربيكيو",
+    name_en: "BBQ Fries",
+    desc_ar: "بطاطا، جبنة موزاريلا، صوص باربيكيو، صوص أبيض",
+    desc_en: "Fries, Mozzarella, BBQ sauce, White sauce",
+    price: 430,
+    image: "https://images.unsplash.com/photo-1518013031185-167814cc5290?q=80&w=1000"
+  },
+  {
+    id: 25,
+    category: "appetizers",
+    name_ar: "بطاطا سادة",
+    name_en: "Plain Fries",
+    desc_ar: "بطاطا مقلية",
+    desc_en: "Fried potatoes",
+    price: 300,
+    image: "https://images.unsplash.com/photo-1518013031185-167814cc5290?q=80&w=1000"
+  },
+
+  // -- Salads --
+  {
+    id: 26,
+    category: "salads",
+    name_ar: "سلطة ذرة",
+    name_en: "Corn Salad",
+    desc_ar: "ذرة، فطر، فليفلة، صوص أبيض",
+    desc_en: "Corn, Mushroom, Peppers, White sauce",
+    price: 180,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1000"
+  },
+  {
+    id: 27,
+    category: "salads",
+    name_ar: "سلطة سيزر",
+    name_en: "Caesar Salad",
+    desc_ar: "خس، توست، دجاج، صوص سيزر، جبنة بارميزان",
+    desc_en: "Lettuce, Toast, Chicken, Caesar sauce, Parmesan cheese",
+    price: 430,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1000"
+  },
+
+  // -- Sauces --
+  {
+    id: 28,
+    category: "sauces",
+    name_ar: "صوص أبيض",
+    name_en: "White Sauce",
+    desc_ar: "",
+    desc_en: "",
+    price: 30,
+    image: "https://images.unsplash.com/photo-1563599350-f8138af9ec45?q=80&w=1000"
+  },
+  {
+    id: 29,
+    category: "sauces",
+    name_ar: "صوص باربيكيو",
+    name_en: "BBQ Sauce",
+    desc_ar: "",
+    desc_en: "",
+    price: 70,
+    image: "https://images.unsplash.com/photo-1563599350-f8138af9ec45?q=80&w=1000"
+  },
+  {
+    id: 30,
+    category: "sauces",
+    name_ar: "صوص رانش",
+    name_en: "Ranch Sauce",
+    desc_ar: "",
+    desc_en: "",
+    price: 70,
+    image: "https://images.unsplash.com/photo-1563599350-f8138af9ec45?q=80&w=1000"
+  },
+  {
+    id: 31,
+    category: "sauces",
+    name_ar: "صوص بوفالو",
+    name_en: "Buffalo Sauce",
+    desc_ar: "",
+    desc_en: "",
+    price: 70,
+    image: "https://images.unsplash.com/photo-1563599350-f8138af9ec45?q=80&w=1000"
+  },
+  {
+    id: 32,
+    category: "sauces",
+    name_ar: "صوص سيزر",
+    name_en: "Caesar Sauce",
+    desc_ar: "",
+    desc_en: "",
+    price: 70,
+    image: "https://images.unsplash.com/photo-1563599350-f8138af9ec45?q=80&w=1000"
+  },
+
+  // -- Drinks --
+  {
+    id: 33,
+    category: "drinks",
+    name_ar: "مشروبات غازية 330 مل",
+    name_en: "Soft Drink 330ml",
+    desc_ar: "كوكاكولا، فانتا، سبرايت",
+    desc_en: "Coca Cola, Fanta, Sprite",
+    price: 80,
+    image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=1000"
+  },
+  {
+    id: 34,
+    category: "drinks",
+    name_ar: "مياه صغيرة",
+    name_en: "Small Water",
+    desc_ar: "",
+    desc_en: "",
+    price: 50,
+    image: "https://images.unsplash.com/photo-1523362628744-0c1001502dc2?q=80&w=1000"
+  },
+  {
+    id: 35,
+    category: "drinks",
+    name_ar: "مياه كبيرة",
+    name_en: "Large Water",
+    desc_ar: "",
+    desc_en: "",
+    price: 100,
+    image: "https://images.unsplash.com/photo-1523362628744-0c1001502dc2?q=80&w=1000"
+  }
+];
+
+// State Management
+let currentLang = 'ar';
+let currentCategory = 'all';
+
+const categoryConfig = {
+  vegetables: { ar: "الخضروات", en: "Vegetables" },
+  chicken: { ar: "الدجاج", en: "Chicken" },
+  hot_meats: { ar: "اللحومات الساخنة", en: "Hot Meats" },
+  cold_meats: { ar: "اللحومات الباردة", en: "Cold Meats" },
+  choice: { ar: "بيتزا حسب الطلب", en: "Choice Pizza" },
+  appetizers: { ar: "المقبلات", en: "Appetizers" },
+  salads: { ar: "السلطات", en: "Salads" },
+  sauces: { ar: "الصوصات", en: "Sauces" },
+  drinks: { ar: "المشروبات", en: "Drinks" }
+};
+
+// DOM Elements
+const pizzaGrid = document.getElementById('pizzaGrid');
+const filterTabs = document.querySelectorAll('.filter-tab');
+const langButtons = document.querySelectorAll('.lang-btn');
+const modal = document.getElementById('pizzaModal');
+const closeModal = document.getElementById('closeModal');
+
+/**
+ * Format price with thousands separator
+ */
+function formatPrice(num) {
+  return new Intl.NumberFormat().format(num);
+}
+
+/**
+ * Initialize Application
+ */
+function init() {
+  renderPizzas();
+  setupEventListeners();
+  setupFloatingBackground();
+}
+
+/**
+ * Dynamically generate high-density floating background elements
+ */
+function setupFloatingBackground() {
+  const container = document.getElementById('floatingBg');
+  if (!container) return;
+
+  const count = 60; // 50+ as requested
+  const fragments = document.createDocumentFragment();
+
+  for (let i = 0; i < count; i++) {
+    const item = document.createElement('img');
+    const isMushroom = Math.random() > 0.5;
+
+    item.src = isMushroom ? 'images/bg/mushroom.png' : 'images/bg/pepper.png';
+    item.className = `floating-item ${isMushroom ? 'mushroom' : 'pepper'}`;
+
+    // Randomize positioning
+    const top = Math.random() * 100;
+    const left = Math.random() * 100;
+    const delay = Math.random() * -20; // Negative delay so they start at different states
+    const duration = 15 + Math.random() * 20; // 15s to 35s
+
+    item.style.top = `${top}%`;
+    item.style.left = `${left}%`;
+    item.style.animationDelay = `${delay}s`;
+    item.style.animationDuration = `${duration}s`;
+
+    fragments.appendChild(item);
+  }
+
+  container.appendChild(fragments);
+}
+
+
+/**
+ * Render Pizza Cards
+ */
+function renderPizzas() {
+  pizzaGrid.innerHTML = '';
+
+  const filteredItems = menuData.filter(item =>
+    currentCategory === 'all' || item.category === currentCategory
+  );
+
+  // Group items by category if "All" is selected
+  const groups = {};
+  if (currentCategory === 'all') {
+    filteredItems.forEach(item => {
+      if (!groups[item.category]) groups[item.category] = [];
+      groups[item.category].push(item);
+    });
+  } else {
+    groups[currentCategory] = filteredItems;
+  }
+
+  // Iterate through groups and render
+  Object.keys(groups).forEach((catKey) => {
+    const groupItems = groups[catKey];
+    if (groupItems.length === 0) return;
+
+    // Add Category Header (Only if multiple categories are visible or if filtered)
+    const header = document.createElement('div');
+    header.className = 'category-group-header animate-fade-in category-section';
+    header.id = `cat-${catKey}`; // Anchor for ScrollSpy
+    const catName = categoryConfig[catKey] ?
+      (currentLang === 'ar' ? categoryConfig[catKey].ar : categoryConfig[catKey].en) :
+      catKey;
+    header.innerHTML = `<h2>${catName}</h2><div class="header-line"></div>`;
+    pizzaGrid.appendChild(header);
+
+    groupItems.forEach((item, index) => {
+      const card = document.createElement('div');
+      card.className = 'pizza-card animate-fade-in';
+      card.style.animationDelay = `${index * 0.05}s`;
+
+      const name = currentLang === 'ar' ? item.name_ar : item.name_en;
+      const desc = currentLang === 'ar' ? item.desc_ar : item.desc_en;
+
+      let priceDisplay = '';
+      if (item.prices) {
+        const minPrice = item.prices.small;
+        priceDisplay = currentLang === 'ar' ? `بدءاً من ${formatPrice(minPrice)}` : `From ${formatPrice(minPrice)}`;
+      } else {
+        priceDisplay = formatPrice(item.price);
+      }
+
+      card.innerHTML = `
+              <div class="pizza-img-box">
+                  <img src="${item.image}" alt="${name}" class="pizza-img" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000'">
+              </div>
+              <div class="pizza-content">
+                  <h3 class="pizza-title">${name}</h3>
+                  <p class="pizza-desc">${desc}</p>
+                  <div class="pizza-footer">
+                      <span class="pizza-price">${priceDisplay}</span>
+                      <button class="btn-order" onclick="openItemDetails(${item.id})">
+                          ${currentLang === 'ar' ? 'التفاصيل' : 'Details'}
+                      </button>
+                  </div>
+              </div>
+          `;
+
+      pizzaGrid.appendChild(card);
+    });
+  });
+
+  // Re-initialize ScrollSpy after rendering
+  setupCategoryScrollSpy();
+}
+
+/**
+ * Open Modal with Item Details
+ */
+window.openItemDetails = function (id) {
+  const item = menuData.find(p => p.id === id);
+  if (!item) return;
+
+  const name = currentLang === 'ar' ? item.name_ar : item.name_en;
+  const desc = currentLang === 'ar' ? item.desc_ar : item.desc_en;
+
+  document.getElementById('modalPizzaImg').src = item.image;
+  document.getElementById('modalPizzaName').innerText = name;
+  document.getElementById('modalPizzaDesc').innerText = desc;
+
+  const priceContainer = document.getElementById('modalPizzaPrice');
+
+  function getPriceHtml(price) {
+    const oldSyp = price * 100;
+    return `
+      <div class="dual-price-wrapper">
+        <div class="price-box new">
+          <span class="price-label">${currentLang === 'ar' ? 'السعر الجديد' : 'New SYP'}</span>
+          <span class="price-value">${formatPrice(price)}</span>
+        </div>
+        <div class="price-box old">
+          <span class="price-label">${currentLang === 'ar' ? 'السعر القديم' : 'Old SYP'}</span>
+          <span class="price-value">${formatPrice(oldSyp)}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  if (item.prices) {
+    // Show sizes + Initial Small price
+    const initialPrice = item.prices.small;
+    priceContainer.innerHTML = `
+        ${getPriceHtml(initialPrice)}
+        <div class="size-selector">
+            <button class="size-btn active" onclick="updatePrice(${item.id}, 'small', ${item.prices.small})">${currentLang === 'ar' ? 'صغير' : 'Small'}</button>
+            <button class="size-btn" onclick="updatePrice(${item.id}, 'medium', ${item.prices.medium})">${currentLang === 'ar' ? 'وسط' : 'Medium'}</button>
+            <button class="size-btn" onclick="updatePrice(${item.id}, 'large', ${item.prices.large})">${currentLang === 'ar' ? 'كبير' : 'Large'}</button>
+        </div>
+    `;
+  } else {
+    priceContainer.innerHTML = getPriceHtml(item.price);
+  }
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+};
+
+window.updatePrice = function (id, size, price) {
+  const item = menuData.find(p => p.id === id);
+  if (!item || !item.prices) return;
+
+  // Update active class
+  const buttons = document.querySelectorAll('.size-btn');
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  // Update Dual Price Display
+  const oldSyp = price * 100;
+  const wrapper = document.querySelector('.dual-price-wrapper');
+  if (wrapper) {
+    wrapper.innerHTML = `
+      <div class="price-box new">
+        <span class="price-label">${currentLang === 'ar' ? 'السعر الجديد' : 'New SYP'}</span>
+        <span class="price-value">${formatPrice(price)}</span>
+      </div>
+      <div class="price-box old">
+        <span class="price-label">${currentLang === 'ar' ? 'السعر القديم' : 'Old SYP'}</span>
+        <span class="price-value">${formatPrice(oldSyp)}</span>
+      </div>
+    `;
+  }
+};
+
+
+/**
+ * Setup Event Listeners
+ */
+function setupEventListeners() {
+  // Language Toggle
+  langButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      langButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentLang = btn.dataset.lang;
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      updateStaticText();
+      renderPizzas();
+    });
+  });
+
+  // Category Filter
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const category = tab.dataset.category;
+
+      // If already in 'all' mode and clicking a category, scroll to it
+      if (currentCategory === 'all' && category !== 'all') {
+        const targetSection = document.getElementById(`cat-${category}`);
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+          return;
+        }
+      }
+
+      filterTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentCategory = category;
+      renderPizzas();
+
+      // If switched to 'all', scroll to top of menu
+      if (category === 'all') {
+        const menuTop = document.querySelector('.menu-section').offsetTop;
+        window.scrollTo({
+          top: menuTop - 80,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // Close Modal
+  closeModal.addEventListener('click', () => {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  });
+
+  window.onclick = (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  };
+}
+
+/**
+ * Update non-dynamic UI text based on language
+ */
+function updateStaticText() {
+  document.querySelectorAll('[data-ar]').forEach(el => {
+    el.innerText = el.getAttribute(`data-${currentLang}`);
+  });
+}
+
+/**
+ * Pro Pizza Scroll Animation Logic (Canvas Sequence Player)
+ * Features: High-performance Canvas, Smooth Interpolation, and Unified UI Sync
+ */
+function setupProScrollAnimation() {
+  const container = document.querySelector('.pizza-scroll-container');
+  const canvas = document.getElementById('pizzaCanvas');
+  const ctx = canvas?.getContext('2d');
+  const animationBox = document.getElementById('pizzaAnimationBox');
+  const menuSection = document.querySelector('.menu-section');
+  const pillLeft = document.getElementById('sidePillLeft');
+  const pillRight = document.getElementById('sidePillRight');
+
+  if (!container || !canvas || !ctx || !animationBox || !menuSection || !pillLeft || !pillRight) return;
+
+  const frameCount = 56;
+  const framePath = 'images/pizza cut in half/ezgif-frame-';
+  const frames = []; // Stores processed transparent canvases
+  let imagesLoaded = 0;
+
+  // Optimized smoothing state
+  let scrollProgress = 0;
+  let smoothedProgress = 0;
+  let currentFrameIndex = -1;
+
+  // Smoothing constant (0.1 for high-end inertia)
+  const lerpFactor = 0.1;
+
+  // Chroma Key processing
+  const tempCanvas = document.createElement('canvas');
+  tempCanvas.width = canvas.width;
+  tempCanvas.height = canvas.height;
+  const tCtx = tempCanvas.getContext('2d');
+
+  // 1. Preload and Process frames
+  for (let i = 1; i <= frameCount; i++) {
+    const img = new Image();
+    const frameNum = i.toString().padStart(3, '0');
+    const index = i - 1;
+
+    img.onload = () => {
+      try {
+        tCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+        tCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
+
+        const imageData = tCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+        const data = imageData.data;
+
+        // Chroma Key: Black to Transparent
+        for (let j = 0; j < data.length; j += 4) {
+          if (data[j] < 20 && data[j + 1] < 20 && data[j + 2] < 20) {
+            data[j + 3] = 0;
+          }
+        }
+        tCtx.putImageData(imageData, 0, 0);
+
+        const offscreen = document.createElement('canvas');
+        offscreen.width = canvas.width;
+        offscreen.height = canvas.height;
+        offscreen.getContext('2d').drawImage(tempCanvas, 0, 0);
+        frames[index] = offscreen;
+      } catch (e) {
+        console.warn("Falling back to CSS blending.");
+        canvas.style.mixBlendMode = 'screen';
+        frames[index] = img;
+      }
+
+      imagesLoaded++;
+      if (imagesLoaded === frameCount) {
+        startAnimationLoop();
+      }
+    };
+    img.src = `${framePath}${frameNum}.jpg`;
+  }
+
+  // 2. Optimized Scroll Listener
+  window.addEventListener('scroll', () => {
+    const rect = container.getBoundingClientRect();
+    const progress = -rect.top / (rect.height - window.innerHeight);
+    scrollProgress = Math.max(0, Math.min(1, progress));
+  }, { passive: true });
+
+  // 3. Smooth Animation Loop (Time-independent)
+  function startAnimationLoop() {
+    function render() {
+      // Apply linear interpolation for buttery smoothness
+      smoothedProgress += (scrollProgress - smoothedProgress) * lerpFactor;
+
+      // Map to frame index
+      const targetFrame = Math.round(smoothedProgress * (frameCount - 1));
+
+      // Only redraw if frame changed
+      if (targetFrame !== currentFrameIndex) {
+        currentFrameIndex = targetFrame;
+        const frame = frames[currentFrameIndex];
+        if (frame) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(frame, 0, 0, canvas.width, canvas.height);
+        }
+      }
+
+      // Sync UI elements to the SMOOTHED progress
+      updateUIStates(smoothedProgress);
+
+      requestAnimationFrame(render);
+    }
+    render();
+  }
+
+  function updateUIStates(progress) {
+    // Dynamic Scaled Side Pills - "Rise and Disappear" Effect
+    // Pill 1 (Left Content) - Centered, Vertical Rise Only
+    const p1Start = 0.1, p1End = 0.5;
+    const p1Factor = Math.max(0, Math.min(1, (progress - p1Start) / (p1End - p1Start)));
+    const p1Alpha = p1Factor > 0 && p1Factor < 1 ? Math.sin(Math.PI * p1Factor) : 0;
+    const p1Rise = 300 - (p1Factor * 800);
+
+    pillLeft.style.opacity = p1Alpha;
+    pillLeft.style.transform = `translate(-50%, calc(-50% + ${p1Rise}px)) scale(${1 + (p1Alpha * 0.1)})`;
+    pillLeft.style.visibility = p1Alpha > 0.01 ? 'visible' : 'hidden';
+
+    // Pill 2 (Right Content) - Centered, Vertical Rise Only
+    const p2Start = 0.4, p2End = 0.8;
+    const p2Factor = Math.max(0, Math.min(1, (progress - p2Start) / (p2End - p2Start)));
+    const p2Alpha = p2Factor > 0 && p2Factor < 1 ? Math.sin(Math.PI * p2Factor) : 0;
+    const p2Rise = 300 - (p2Factor * 800);
+
+    pillRight.style.opacity = p2Alpha;
+    pillRight.style.transform = `translate(-50%, calc(-50% + ${p2Rise}px)) scale(${1 + (p2Alpha * 0.1)})`;
+    pillRight.style.visibility = p2Alpha > 0.01 ? 'visible' : 'hidden';
+
+
+    // Pizza Container Expansion
+    const scaleProgress = Math.max(0, Math.min(1, progress / 0.5));
+    animationBox.style.transform = `scale(${1 + (scaleProgress * 0.4)})`;
+
+    // Menu Section Reveal
+    const revealThreshold = 0.8;
+    const revealProgress = progress > revealThreshold ? (progress - revealThreshold) / (1 - revealThreshold) : 0;
+
+    menuSection.style.opacity = revealProgress;
+    menuSection.style.transform = `translateY(${(1 - revealProgress) * 150}px)`;
+    menuSection.style.zIndex = revealProgress > 0.9 ? "20" : "10";
+  }
+
+
+}
+
+// Start User Experience
+init();
+setupProScrollAnimation();
+
+/**
+ * Category ScrollSpy
+ * Automatically highlights the active category in the filter bar during "All" view
+ */
+function setupCategoryScrollSpy() {
+  if (currentCategory !== 'all') return;
+
+  const sections = document.querySelectorAll('.category-section');
+  const tabs = document.querySelectorAll('.filter-tab');
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '-160px 0px -70% 0px', // Adjusted for sticky header
+    threshold: 0
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id.replace('cat-', '');
+
+        tabs.forEach(tab => {
+          if (tab.dataset.category === id) {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            // Scroll tab into view if container is overflowing (mobile)
+            tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => observer.observe(section));
+}

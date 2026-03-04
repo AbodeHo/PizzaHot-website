@@ -1,0 +1,828 @@
+/* Modern Professional Design System for Pizza Hot */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+    /* Color Palette */
+    --primary: #e63946;
+    --primary-dark: #cc2b37;
+    --primary-light: #ff6b6b;
+    --secondary: #ffb703;
+    --accent: #fb8500;
+
+    /* Neutral Colors */
+    --bg-main: #000000;
+    --bg-surface: #0a0a0a;
+    --bg-card: rgba(15, 15, 15, 0.8);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: rgba(255, 255, 255, 0.1);
+
+    /* Effects */
+    --glass-bg: rgba(30, 41, 59, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --blur: blur(12px);
+
+    /* Layout */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-full: 9999px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --container-width: 1200px;
+}
+
+/* Reset and Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(0, 0, 0, 0.9) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 0, 0, 0.85) 0%, transparent 40%),
+        #000000;
+    min-height: 100vh;
+}
+
+
+
+[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
+
+[dir="ltr"] {
+    direction: ltr;
+    text-align: left;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-surface);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+/* Utilities */
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Header & Glassmorphism Navigation */
+.nav-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: transparent;
+    /* Fully transparent for 'AntiGravity' feel */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background 0.3s ease;
+    padding: 1rem 0;
+}
+
+
+
+
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    /* Base for absolute centering */
+    min-height: 70px;
+}
+
+
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.nav-logo {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+    /* This combination removes the original white background and makes the logo pure white */
+    filter: invert(1) contrast(200%) brightness(120%);
+    mix-blend-mode: screen;
+    transition: var(--transition);
+}
+
+
+
+.logo-text {
+    font-size: 1.75rem;
+    font-weight: 800;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+
+
+/* Language Switcher */
+.lang-switcher {
+    display: flex;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--glass-border);
+}
+
+.lang-btn {
+    padding: 0.5rem 1.25rem;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--radius-full);
+    transition: var(--transition);
+}
+
+
+
+.lang-btn.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+
+/* Pro Pizza Scroll Interaction */
+.pizza-scroll-container {
+    height: 300vh;
+    /* Long scroll for smooth animation */
+    position: relative;
+    margin-top: -2rem;
+}
+
+.sticky-wrapper {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.pizza-animation-box {
+    position: relative;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1076/720;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transform: scale(1.1);
+    /* Bigger baseline scale */
+    /* High-end bloom effect */
+    filter: drop-shadow(0 0 70px rgba(230, 57, 70, 0.2));
+}
+
+#pizzaCanvas {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 2;
+}
+
+
+
+/* Side Marketing Pills - AntiGravity Style */
+.side-pill {
+    position: absolute;
+    padding: 1.2rem 2rem;
+    background: transparent;
+    /* Changed from semi-transparent black */
+    backdrop-filter: none;
+    /* Removed blur */
+    border: none;
+    /* Removed border */
+    border-radius: 100px;
+    color: white;
+    font-weight: 900;
+    /* Extra Bold */
+    font-size: 1.8rem;
+    /* Reduced from 2.5rem for better desktop/scaled fit */
+
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8),
+        0 0 40px rgba(230, 57, 70, 0.3);
+    /* Premium glow/shadow */
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.1s linear;
+    /* Liquid movement */
+}
+
+
+.side-pill.left {
+    left: 50%;
+    top: 50%;
+}
+
+.side-pill.right {
+    left: 50%;
+    top: 50%;
+}
+
+
+
+/* Steam Effect - Professional Subtle Version */
+.steam-container {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    display: flex;
+    gap: 30px;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.steam-particle {
+    width: 60px;
+    height: 120px;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: steamPro 4s infinite ease-in-out;
+    filter: blur(15px);
+}
+
+@keyframes steamPro {
+    0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(-150px) scale(1.8) rotate(15deg);
+        opacity: 0;
+    }
+}
+
+/* Menu Section */
+.menu-section {
+    padding: 4rem 0;
+    position: relative;
+    z-index: 10;
+    background: transparent;
+    /* Made transparent for floating elements */
+    /* Initial state to be uncovered by pizza */
+    opacity: 0;
+    transform: translateY(100px);
+}
+
+
+@media (max-width: 768px) {
+    .pizza-animation-box {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    position: sticky;
+    top: 90px;
+    /* Just below the nav-header */
+    z-index: 95;
+    background: rgba(0, 0, 0, 0.4);
+
+    /* More transparent glassy look */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1.25rem 0.5rem;
+    border-bottom: 1px solid var(--glass-border);
+    transition: var(--transition);
+}
+
+
+
+
+
+
+
+.filter-tab {
+    padding: 0.75rem 1.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    color: var(--text-main);
+    cursor: pointer;
+    font-weight: 700;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+
+
+.filter-tab:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.filter-tab.active {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Pizza Grid */
+.pizza-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+/* Pizza Card */
+.pizza-card {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+    transition: var(--transition);
+    position: relative;
+    backdrop-filter: none;
+    text-align: center;
+}
+
+.pizza-card:hover {
+    transform: translateY(-8px);
+}
+
+.pizza-img-box {
+    width: 260px;
+    height: 260px;
+    margin: 0 auto;
+    background: transparent;
+    overflow: hidden;
+    position: relative;
+    border-radius: 50%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.pizza-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: none;
+    box-shadow: none;
+    transition: var(--transition);
+}
+
+.pizza-card:hover .pizza-img {
+    transform: scale(1.1);
+}
+
+.pizza-content {
+    padding: 1.5rem;
+}
+
+.pizza-title {
+    font-size: 2.2rem;
+    /* Bigger */
+    font-weight: 800;
+    /* Bolder */
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+}
+
+
+.pizza-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.pizza-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.pizza-price {
+    font-size: 2rem;
+    /* Bigger */
+    font-weight: 900;
+    /* Extra Bold */
+    color: var(--primary-light);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+.btn-order {
+    padding: 0.8rem 2rem;
+    /* Bigger button */
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 8px 16px rgba(230, 57, 70, 0.2);
+}
+
+
+.btn-order:hover {
+    background: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.modal-content {
+    background: var(--bg-surface);
+    max-width: 1000px;
+    width: 100%;
+
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    position: relative;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 768px) {
+    .modal-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Category Group Headers */
+.category-group-header {
+    grid-column: 1 / -1;
+    margin: 4rem 0 2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    scroll-margin-top: 160px;
+    /* Space for sticky nav and tabs */
+}
+
+
+
+.category-group-header h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-main);
+    white-space: nowrap;
+}
+
+.category-group-header .header-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--glass-border), transparent);
+}
+
+[dir="rtl"] .category-group-header .header-line {
+    background: linear-gradient(to left, var(--glass-border), transparent);
+}
+
+.category-group-header:first-of-type {
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .filter-tabs {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 1rem 1.5rem;
+        top: 80px;
+        /* Slightly tighter for mobile */
+        gap: 0.75rem;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .category-group-header h2 {
+        font-size: 1.75rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Pizza Details Modal specific styles */
+.modal-body {
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.modal-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+
+.modal-body .pizza-desc {
+    font-size: 1.35rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    -webkit-line-clamp: none;
+    /* Full description in modal */
+    line-clamp: none;
+    max-height: none;
+}
+
+
+.modal-price-tag {
+    margin-bottom: 1.5rem;
+}
+
+.dual-price-wrapper {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+}
+
+.price-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.price-box.new {
+    border-right: 1px solid var(--glass-border);
+    padding-right: 1.5rem;
+}
+
+[dir="rtl"] .price-box.new {
+    border-right: none;
+    border-left: 1px solid var(--glass-border);
+    padding-right: 0;
+    padding-left: 1.5rem;
+}
+
+.price-box .price-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.price-box .price-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+
+
+
+.price-box.new .price-value {
+    color: var(--primary);
+}
+
+.price-box.old .price-value {
+    color: var(--text-main);
+    opacity: 0.8;
+}
+
+.price-box .price-value::after {
+    content: ' SYP';
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.modal-info-label {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Size Selector Styles */
+.size-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.size-btn {
+    padding: 1rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    color: var(--text-main);
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    text-align: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.size-btn:hover {
+    border-color: var(--primary-light);
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.size-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+}
+
+.size-btn.active::after {
+    content: '✓';
+    margin-right: 10px;
+}
+
+[dir="rtl"] .size-btn.active::after {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+/* Floating Background Elements */
+.floating-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.floating-item {
+    position: absolute;
+    width: 120px;
+    height: auto;
+    opacity: 0.12;
+    filter: blur(2px) brightness(0.8);
+    animation: floatAround infinite ease-in-out;
+    will-change: transform;
+}
+
+.floating-item.mushroom {
+    width: 100px;
+}
+
+.floating-item.pepper {
+    width: 130px;
+}
+
+@keyframes floatAround {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, 50px) rotate(10deg) scale(1.05);
+    }
+
+    66% {
+        transform: translate(-20px, 100px) rotate(-5deg) scale(0.95);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .floating-item {
+        width: 60px;
+        opacity: 0.08;
+    }
+
+    .floating-item.mushroom {
+        width: 50px;
+    }
+
+    .floating-item.pepper {
+        width: 70px;
+    }
+}
