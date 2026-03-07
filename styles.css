@@ -243,7 +243,9 @@ body {
     text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8),
         0 0 40px rgba(230, 57, 70, 0.3);
     /* Premium glow/shadow */
-    white-space: nowrap;
+    white-space: normal;
+    text-align: center;
+    max-width: 90vw;
     z-index: 10;
     opacity: 0;
     pointer-events: none;
@@ -260,6 +262,14 @@ body {
 .side-pill.right {
     left: 50%;
     top: 50%;
+}
+
+@media (max-width: 768px) {
+    .side-pill {
+        font-size: 1.2rem;
+        padding: 0.8rem 1.2rem;
+        max-width: 95vw;
+    }
 }
 
 
@@ -348,7 +358,8 @@ body {
 
 
 .filter-tab {
-    padding: 0.75rem 1.75rem;
+    padding: 0.9rem 2.2rem;
+    font-size: 1.15rem;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-full);
@@ -511,11 +522,35 @@ body {
     max-height: 90vh;
     display: flex;
     flex-direction: column;
+    width: 100%;
+}
+
+.modal-image-box {
+    width: 100%;
+    max-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 2rem;
+    flex-shrink: 0;
+}
+
+.modal-image-box .pizza-img {
+    max-width: 350px;
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    filter: drop-shadow(0 0 30px rgba(230, 57, 70, 0.2));
 }
 
 .modal-body {
     padding: 2rem;
     overflow-y: auto;
+    width: 100%;
+    flex: 1;
 }
 
 
@@ -539,13 +574,38 @@ body {
 }
 
 .modal-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
 }
 
 @media (max-width: 768px) {
-    .modal-grid {
-        grid-template-columns: 1fr;
+    .modal-overlay {
+        padding: 0;
+    }
+
+    .modal-content {
+        width: 100%;
+        height: 100%;
+        max-height: 100dvh;
+        margin: 0;
+        border-radius: 0;
+        border: none;
+    }
+
+    .modal-image-box {
+        max-height: 35vh;
+        padding: 1rem;
+    }
+
+    .modal-image-box .pizza-img {
+        max-height: 100%;
+        width: auto;
+        object-fit: contain;
     }
 }
 
@@ -592,8 +652,13 @@ body {
         padding: 1rem 1.5rem;
         top: 80px;
         /* Slightly tighter for mobile */
-        gap: 0.75rem;
+        gap: 1rem;
         -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-tab {
+        padding: 0.8rem 1.8rem;
+        font-size: 1.05rem;
     }
 
     .filter-tabs::-webkit-scrollbar {
