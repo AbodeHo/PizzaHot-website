@@ -526,7 +526,7 @@ body {
 
 .modal-image-box {
     width: 100%;
-    max-height: 400px;
+    max-height: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -537,9 +537,9 @@ body {
 }
 
 .modal-image-box .pizza-img {
-    max-width: 350px;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     border-radius: 50%;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
     filter: drop-shadow(0 0 30px rgba(230, 57, 70, 0.2));
@@ -597,13 +597,13 @@ body {
     }
 
     .modal-image-box {
-        max-height: 35vh;
+        max-height: 45vh;
         padding: 1rem;
     }
 
     .modal-image-box .pizza-img {
         max-height: 100%;
-        width: auto;
+        width: 100%;
         object-fit: contain;
     }
 }
