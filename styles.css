@@ -113,7 +113,7 @@ body {
     align-items: center;
     position: relative;
     /* Base for absolute centering */
-    min-height: 70px;
+    min-height: 120px;
 }
 
 
@@ -125,7 +125,7 @@ body {
 }
 
 .nav-logo {
-    height: 70px;
+    height: 120px;
     width: auto;
     object-fit: contain;
     /* This combination removes the original white background and makes the logo pure white */
@@ -137,7 +137,7 @@ body {
 
 
 .logo-text {
-    font-size: 1.75rem;
+    font-size: 3rem;
     font-weight: 800;
     background: linear-gradient(to right, var(--primary), var(--accent));
     -webkit-background-clip: text;
@@ -158,11 +158,12 @@ body {
 }
 
 .lang-btn {
-    padding: 0.5rem 1.25rem;
+    padding: 0.75rem 2rem;
     border: none;
     background: transparent;
     color: var(--text-muted);
     font-family: inherit;
+    font-size: 1.4rem;
     font-weight: 600;
     cursor: pointer;
     border-radius: var(--radius-full);
