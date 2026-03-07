@@ -692,6 +692,7 @@ function setupProScrollAnimation() {
   const framePath = 'images/pizza cut in half/ezgif-frame-';
   const frames = []; // Stores processed transparent canvases
   let imagesLoaded = 0;
+  let animationStarted = false;
 
   // Optimized smoothing state
   let scrollProgress = 0;
@@ -706,6 +707,22 @@ function setupProScrollAnimation() {
   tempCanvas.width = canvas.width;
   tempCanvas.height = canvas.height;
   const tCtx = tempCanvas.getContext('2d');
+
+  function checkAllLoaded() {
+    imagesLoaded++;
+    if (imagesLoaded === frameCount && !animationStarted) {
+      startAnimationLoop();
+    }
+  }
+
+  // Mobile Failsafe: Force layout to appear if images take too long to process
+  // or if the browser silently drops the canvas creation due to memory limits.
+  setTimeout(() => {
+    if (!animationStarted) {
+      console.warn("Animation frames took too long to load or failed. Forcing menu display.");
+      startAnimationLoop();
+    }
+  }, 3000);
 
   // 1. Preload and Process frames
   for (let i = 1; i <= frameCount; i++) {
@@ -740,12 +757,15 @@ function setupProScrollAnimation() {
         frames[index] = img;
       }
 
-      imagesLoaded++;
-      if (imagesLoaded === frameCount) {
-        startAnimationLoop();
-      }
+      checkAllLoaded();
     };
-    img.src = `${framePath}${frameNum}.jpg`;
+
+    img.onerror = () => {
+      console.error(`Failed to load frame ${index}`);
+      checkAllLoaded();
+    };
+
+    img.src = encodeURI(`${framePath}${frameNum}.jpg`);
   }
 
   // 2. Optimized Scroll Listener
@@ -757,6 +777,13 @@ function setupProScrollAnimation() {
 
   // 3. Smooth Animation Loop (Time-independent)
   function startAnimationLoop() {
+    animationStarted = true;
+    // ensure base elements are visible immediately in case of fallback
+    animationBox.style.opacity = 1;
+    menuSection.style.opacity = 1;
+    menuSection.style.transform = `translateY(0px)`;
+    menuSection.style.zIndex = "20";
+
     function render() {
       // Apply linear interpolation for buttery smoothness
       smoothedProgress += (scrollProgress - smoothedProgress) * lerpFactor;
@@ -809,13 +836,20 @@ function setupProScrollAnimation() {
     const scaleProgress = Math.max(0, Math.min(1, progress / 0.5));
     animationBox.style.transform = `scale(${1 + (scaleProgress * 0.4)})`;
 
-    // Menu Section Reveal
-    const revealThreshold = 0.8;
-    const revealProgress = progress > revealThreshold ? (progress - revealThreshold) / (1 - revealThreshold) : 0;
+    // Menu Section Reveal - smooth transition
+    const revealThreshold = 0.6; // lower threshold so it appears sooner
+    const revealProgress = progress > revealThreshold ? (progress - revealThreshold) / (1 - revealThreshold) : Math.max(0.1, progress); // ensure minimum opacity if scrolled at all
 
-    menuSection.style.opacity = revealProgress;
-    menuSection.style.transform = `translateY(${(1 - revealProgress) * 150}px)`;
-    menuSection.style.zIndex = revealProgress > 0.9 ? "20" : "10";
+    // Always visible at very start if it failed to load properly
+    if (imagesLoaded < frameCount) {
+      menuSection.style.opacity = 1;
+      menuSection.style.transform = `translateY(0px)`;
+      menuSection.style.zIndex = "20";
+    } else {
+      menuSection.style.opacity = Math.max(0, revealProgress);
+      menuSection.style.transform = `translateY(${(1 - revealProgress) * 50}px)`; // less dramatic travel distance
+      menuSection.style.zIndex = revealProgress > 0.5 ? "20" : "10";
+    }
   }
 
 

@@ -114,6 +114,7 @@ body {
     position: relative;
     /* Base for absolute centering */
     min-height: 70px;
+    padding: 0 1rem;
 }
 
 
@@ -200,6 +201,7 @@ body {
 .pizza-animation-box {
     position: relative;
     width: 100%;
+    max-width: 100vw;
     height: auto;
     aspect-ratio: 1076/720;
     display: flex;
@@ -327,8 +329,26 @@ body {
 
 @media (max-width: 768px) {
     .pizza-animation-box {
-        width: 300px;
-        height: 300px;
+        width: 100%;
+        height: auto;
+        transform: scale(1);
+    }
+
+    .logo-container {
+        gap: 0.5rem;
+    }
+
+    .nav-logo {
+        height: 45px;
+    }
+
+    .logo-text {
+        font-size: 1.1rem;
+    }
+
+    .lang-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
     }
 }
 
@@ -628,7 +648,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: var(--text-main);
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .category-group-header .header-line {
@@ -666,7 +686,8 @@ body {
     }
 
     .category-group-header h2 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
+        letter-spacing: 1px;
     }
 }
 
@@ -806,6 +827,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+@media (max-width: 768px) {
+    .size-btn {
+        padding: 1.25rem;
+        font-size: 1.25rem;
+    }
 }
 
 .size-btn:hover {
