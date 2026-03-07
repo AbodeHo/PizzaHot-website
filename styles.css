@@ -113,7 +113,7 @@ body {
     align-items: center;
     position: relative;
     /* Base for absolute centering */
-    min-height: 120px;
+    min-height: 200px;
 }
 
 
@@ -125,7 +125,7 @@ body {
 }
 
 .nav-logo {
-    height: 120px;
+    height: 200px;
     width: auto;
     object-fit: contain;
     /* This combination removes the original white background and makes the logo pure white */
@@ -909,4 +909,5 @@ body {
     .floating-item.pepper {
         width: 70px;
     }
+
 }
