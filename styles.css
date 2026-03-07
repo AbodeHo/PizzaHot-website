@@ -177,6 +177,29 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+@media (max-width: 768px) {
+    .nav-header {
+        padding: 1.5rem 1rem;
+    }
+
+    .nav-logo {
+        height: 110px;
+    }
+
+    .logo-text {
+        font-size: 2.8rem;
+    }
+
+    .lang-btn {
+        padding: 0.75rem 1.75rem;
+        font-size: 1.3rem;
+    }
+
+    .nav-container {
+        min-height: 100px;
+    }
+}
+
 
 
 /* Pro Pizza Scroll Interaction */
@@ -266,7 +289,7 @@ body {
 
 @media (max-width: 768px) {
     .side-pill {
-        font-size: 1.2rem;
+        font-size: 2rem;
         padding: 0.8rem 1.2rem;
         max-width: 95vw;
     }
