@@ -712,14 +712,14 @@ body {
 }
 
 .modal-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 800;
     margin-bottom: 1rem;
 }
 
 
 .modal-body .pizza-desc {
-    font-size: 5rem;
+    font-size: 4rem;
     line-height: 1.6;
     margin-bottom: 2rem;
     -webkit-line-clamp: none;
@@ -911,5 +911,6 @@ body {
     }
 
 }
+
 
 
