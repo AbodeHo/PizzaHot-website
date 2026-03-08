@@ -639,8 +639,8 @@ body {
     margin: 4rem 0 2rem 0;
     display: flex;
     align-items: center;
-    gap: 4rem;
-    scroll-margin-top: 160px;
+    gap: 2rem;
+    scroll-margin-top: 320px;
     /* Space for sticky nav and tabs */
 }
 
@@ -912,6 +912,7 @@ body {
     }
 
 }
+
 
 
 
