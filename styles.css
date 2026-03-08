@@ -719,7 +719,7 @@ body {
 
 
 .modal-body .pizza-desc {
-    font-size: 3.8rem;
+    font-size: 5rem;
     line-height: 1.6;
     margin-bottom: 2rem;
     -webkit-line-clamp: none;
@@ -909,4 +909,5 @@ body {
     .floating-item.pepper {
         width: 70px;
     }
+
 }
