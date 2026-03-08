@@ -639,7 +639,7 @@ body {
     display: flex;
     align-items: center;
     gap: 2rem;
-    scroll-margin-top: 500px;
+    scroll-margin-top: 800px;
     /* Space for sticky nav and tabs */
 }
 
@@ -909,4 +909,5 @@ body {
     .floating-item.pepper {
         width: 70px;
     }
+
 }
