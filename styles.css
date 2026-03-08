@@ -707,12 +707,12 @@ body {
 
 /* Pizza Details Modal specific styles */
 .modal-body {
-    padding: 2rem;
+    padding: 0.5rem;
     overflow-y: auto;
 }
 
 .modal-title {
-    font-size: 0.5rem;
+    font-size: 2rem;
     font-weight: 800;
     margin-bottom: 1rem;
 }
@@ -911,6 +911,7 @@ body {
     }
 
 }
+
 
 
 
