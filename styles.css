@@ -363,7 +363,7 @@ body {
     gap: 1rem;
     margin-bottom: 3rem;
     position: sticky;
-    top: 90px;
+    top: 220px;
     /* Just below the nav-header */
     z-index: 95;
     background: rgba(0, 0, 0, 0.4);
@@ -639,7 +639,7 @@ body {
     display: flex;
     align-items: center;
     gap: 2rem;
-    scroll-margin-top: 550px;
+    scroll-margin-top: 500px;
     /* Space for sticky nav and tabs */
 }
 
@@ -909,5 +909,4 @@ body {
     .floating-item.pepper {
         width: 70px;
     }
-
 }
