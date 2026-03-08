@@ -639,7 +639,7 @@ body {
     margin: 4rem 0 2rem 0;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2rem;
     scroll-margin-top: 160px;
     /* Space for sticky nav and tabs */
 }
@@ -647,7 +647,7 @@ body {
 
 
 .category-group-header h2 {
-    font-size: 2.5rem;
+    font-size: 4rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -912,6 +912,7 @@ body {
     }
 
 }
+
 
 
 
