@@ -389,7 +389,7 @@ body {
     border-radius: var(--radius-full);
     color: var(--text-main);
     cursor: pointer;
-    fons-size: 2rem;
+    fons-size: 1.75rem;
     font-weight: 700;
     transition: var(--transition);
     white-space: nowrap;
@@ -912,5 +912,6 @@ body {
     }
 
 }
+
 
 
