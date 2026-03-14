@@ -1006,13 +1006,14 @@ body {
 }
 
 .action-icon {
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
     background: rgba(230, 57, 70, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 4px;
     color: var(--primary);
     margin-bottom: 0.5rem;
 }
@@ -1071,9 +1072,9 @@ body {
     .contact-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .map-wrapper {
-        min-height: 350px;
+        min-height: 500px;
     }
 }
 
@@ -1081,11 +1082,11 @@ body {
     .contact-section {
         padding: 4rem 0;
     }
-    
+
     .action-card {
         padding: 2rem;
     }
-    
+
     .btn-action {
         font-size: 1.1rem;
         padding: 1rem 1.5rem;
@@ -1246,6 +1247,3 @@ body {
         font-size: 1.8rem;
     }
 }
-
-
-
