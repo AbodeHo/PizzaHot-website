@@ -540,6 +540,10 @@ window.openItemDetails = function (id) {
   document.getElementById('modalPizzaDesc').innerText = desc;
 
   const priceContainer = document.getElementById('modalPizzaPrice');
+  const crustContainer = document.getElementById('modalPizzaCrust');
+
+  // Reset crust container
+  crustContainer.innerHTML = '';
 
   function getPriceHtml(price) {
     const oldSyp = price * 100;
@@ -568,12 +572,30 @@ window.openItemDetails = function (id) {
             <button class="size-btn" onclick="updatePrice(${item.id}, 'large', ${item.prices.large})">${currentLang === 'ar' ? 'كبير' : 'Large'}</button>
         </div>
     `;
+
+    // Add Crust Options for Pizzas
+    crustContainer.innerHTML = `
+        <span class="modal-info-label">${currentLang === 'ar' ? 'نوع العجينة' : 'Crust Type'}</span>
+        <div class="crust-selector">
+            <button class="crust-btn active" onclick="selectCrust(this)">${currentLang === 'ar' ? 'اورجينال' : 'Original'}</button>
+            <button class="crust-btn" onclick="selectCrust(this)">${currentLang === 'ar' ? 'رقيقة' : 'Thin'}</button>
+        </div>
+    `;
   } else {
     priceContainer.innerHTML = getPriceHtml(item.price);
   }
 
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
+};
+
+/**
+ * Handle Crust Selection
+ */
+window.selectCrust = function (btn) {
+  const container = btn.closest('.crust-selector');
+  container.querySelectorAll('.crust-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
 };
 
 window.updatePrice = function (id, size, price) {
@@ -662,6 +684,17 @@ function setupEventListeners() {
       document.body.style.overflow = 'auto';
     }
   };
+
+  // Header Location Shortcut
+  const headerLocationBtn = document.getElementById('headerLocationBtn');
+  if (headerLocationBtn) {
+    headerLocationBtn.addEventListener('click', () => {
+      const locationSection = document.getElementById('location');
+      if (locationSection) {
+        locationSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
 }
 
 /**
@@ -861,3 +894,81 @@ function setupCategoryScrollSpy() {
 
   sections.forEach(section => observer.observe(section));
 }
+
+/**
+ * Branch Configuration for Contact Section
+ */
+const branchConfig = {
+  malki: {
+    lat: 33.513412554802834,
+    lng: 36.274720239021704,
+    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6653.074670898194!2d36.274720239021704!3d33.513412554802834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1518e74d1f8f9b4b%3A0xc0f494ee8cb65f84!2sPizza%20hot!5e0!3m2!1sen!2sin!4v1773497156508!5m2!1sen!2sin"
+  },
+  midan: {
+    lat: 33.49325620921114,
+    lng: 36.296490004186026,
+    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1398.9624088250382!2d36.296490004186026!3d33.49325620921114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1518e1d99c2cac8d%3A0xff665c2c43fbf630!2z2KfZhNmB2LfZitix2Kkg2KfZhNiz2KfYrtmG2Kk!5e0!3m2!1sen!2sin!4v1773499505527!5m2!1sen!2sin"
+  }
+};
+
+let activeBranch = 'malki';
+
+/**
+ * Switch the active branch and update the map
+ */
+window.switchBranch = function (branchKey) {
+  if (!branchConfig[branchKey]) return;
+
+  activeBranch = branchKey;
+
+  // Update branch item active state
+  document.querySelectorAll('.branch-item').forEach(item => {
+    item.classList.remove('active');
+  });
+  const activeEl = document.getElementById(`branch-${branchKey}`);
+  if (activeEl) activeEl.classList.add('active');
+
+  // Update Map Iframe
+  const mapIframe = document.getElementById('contactMap');
+  if (mapIframe) {
+    mapIframe.src = branchConfig[branchKey].mapUrl;
+  }
+
+  // Smooth scroll to map on mobile
+  if (window.innerWidth < 992) {
+    const mapCard = document.querySelector('.map-card');
+    if (mapCard) {
+      mapCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+};
+
+/**
+ * Get Directions to the current active branch
+ * Uses Geolocation API to construct a Google Maps directions URL
+ */
+window.getDirections = function () {
+  const config = branchConfig[activeBranch];
+  const restaurantLat = config.lat;
+  const restaurantLng = config.lng;
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
+        const url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${restaurantLat},${restaurantLng}&travelmode=driving`;
+        window.open(url, '_blank');
+      },
+      (error) => {
+        console.warn('Geolocation failed, falling back to static destination map', error);
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${restaurantLat},${restaurantLng}&travelmode=driving`;
+        window.open(url, '_blank');
+      },
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+    );
+  } else {
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${restaurantLat},${restaurantLng}&travelmode=driving`;
+    window.open(url, '_blank');
+  }
+};
