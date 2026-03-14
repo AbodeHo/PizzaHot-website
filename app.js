@@ -857,6 +857,7 @@ function setupProScrollAnimation() {
 // Start User Experience
 init();
 setupProScrollAnimation();
+setupCategoryScrollSpy();
 
 /**
  * Category ScrollSpy
@@ -945,30 +946,15 @@ window.switchBranch = function (branchKey) {
 
 /**
  * Get Directions to the current active branch
- * Uses Geolocation API to construct a Google Maps directions URL
+ * Uses a direct Google Maps URL for reliable redirection on all devices.
  */
 window.getDirections = function () {
   const config = branchConfig[activeBranch];
   const restaurantLat = config.lat;
   const restaurantLng = config.lng;
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const userLat = position.coords.latitude;
-        const userLng = position.coords.longitude;
-        const url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${restaurantLat},${restaurantLng}&travelmode=driving`;
-        window.open(url, '_blank');
-      },
-      (error) => {
-        console.warn('Geolocation failed, falling back to static destination map', error);
-        const url = `https://www.google.com/maps/dir/?api=1&destination=${restaurantLat},${restaurantLng}&travelmode=driving`;
-        window.open(url, '_blank');
-      },
-      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-    );
-  } else {
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${restaurantLat},${restaurantLng}&travelmode=driving`;
-    window.open(url, '_blank');
-  }
+  // Direct URL avoids async callbacks that mobile browsers often block.
+  // Google Maps automatically handles "Your Location" if origin is omitted.
+  const url = `https://www.google.com/maps/dir/?api=1&destination=${restaurantLat},${restaurantLng}&travelmode=driving`;
+  window.open(url, '_blank');
 };
