@@ -113,7 +113,8 @@ body {
     align-items: center;
     position: relative;
     /* Base for absolute centering */
-    min-height: 200px;
+    min-height: 120px;
+    /* Reduced from 200px for responsiveness */
 }
 
 
@@ -237,30 +238,33 @@ body {
     height: 300vh;
     /* Long scroll for smooth animation */
     position: relative;
-    margin-top: -2rem;
+    margin-top: 0;
+    /* Removed negative margin */
 }
 
 .sticky-wrapper {
     position: sticky;
     top: 0;
+    width: 100vw;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    background: #000;
+    /* Ensure seamless black background */
 }
 
 .pizza-animation-box {
     position: relative;
     width: 100%;
-    height: auto;
-    aspect-ratio: 1076/720;
+    height: 100%;
+    /* Full size of sticky-wrapper */
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 1;
-    transform: scale(1.1);
-    /* Bigger baseline scale */
+    transform: scale(1);
     /* High-end bloom effect */
     filter: drop-shadow(0 0 70px rgba(230, 57, 70, 0.2));
 }
@@ -268,7 +272,8 @@ body {
 #pizzaCanvas {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    /* Covers full screen edge to edge */
     z-index: 2;
 }
 
