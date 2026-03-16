@@ -351,7 +351,7 @@ const menuData = [
     desc_ar: "كوكاكولا، فانتا، سبرايت",
     desc_en: "Coca Cola, Fanta, Sprite",
     price: 80,
-    image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?q=80&w=1829&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     id: 34,
@@ -361,7 +361,7 @@ const menuData = [
     desc_ar: "",
     desc_en: "",
     price: 50,
-    image: ""
+    image: "https://images.unsplash.com/photo-1616118132534-381148898bb4?q=80&w=928&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     id: 35,
@@ -371,7 +371,7 @@ const menuData = [
     desc_ar: "",
     desc_en: "",
     price: 100,
-    image: ""
+    image: "https://images.unsplash.com/photo-1616118132534-381148898bb4?q=80&w=928&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   }
 ];
 
