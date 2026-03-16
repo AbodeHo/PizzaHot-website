@@ -1145,7 +1145,7 @@ body {
 .phone-numbers a {
     color: var(--text-muted);
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     font-weight: 500;
     transition: var(--transition);
 }
@@ -1155,8 +1155,8 @@ body {
 }
 
 .branch-call-btn {
-    width: 44px;
-    height: 44px;
+    width: 55px;
+    height: 55px;
     background: var(--primary);
     color: white;
     border-radius: 50%;
@@ -1180,8 +1180,8 @@ body {
 }
 
 .branch-map-btn {
-    width: 44px;
-    height: 44px;
+    width: 55px;
+    height: 55px;
     background: rgba(255, 255, 255, 0.05);
     color: var(--text-main);
     border: 1px solid var(--glass-border);
