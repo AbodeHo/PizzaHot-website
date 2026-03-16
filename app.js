@@ -233,7 +233,7 @@ const menuData = [
     desc_ar: "حسب الطلب",
     desc_en: "As per order",
     prices: { small: 830, medium: 1240, large: 1660 },
-    image: "images/pizzas/كل تلت شكل.JPG"
+    image: "images/pizzas/كل تلت شكل.jpg"
   },
 
   // -- Appetizers --
