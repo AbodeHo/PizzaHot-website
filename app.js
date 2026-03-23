@@ -329,7 +329,7 @@ const menuData = [
     desc_ar: "",
     desc_en: "",
     price: 70,
-    image: "images/pizzas/صوص باربكيو.jpg"
+    image: "images/pizzas/buffalo.png"
   },
   {
     id: 32,
