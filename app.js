@@ -25,7 +25,7 @@ const menuData = [
     desc_ar: "صوص، جبنة، فطر",
     desc_en: "Sauce, Cheese, Mushroom",
     prices: { small: 600, medium: 850, large: 1200 },
-    image: "images/pizzas/mushroom.jpg"
+    image: "images/pizzas/mushroom.png"
   },
   {
     id: 3,
