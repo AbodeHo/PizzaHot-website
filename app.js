@@ -255,7 +255,7 @@ const menuData = [
     desc_ar: "بطاطا، جبنة موزاريلا، صوص باربيكيو، صوص أبيض",
     desc_en: "Fries, Mozzarella, BBQ sauce, White sauce",
     price: 450,
-    image: "images/pizzas/بطاطا بالجبنة.JPG"
+    image: "images/pizzas/بطاطا باربكيو.png"
   },
   {
     id: 25,
