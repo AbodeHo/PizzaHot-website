@@ -448,31 +448,18 @@ function setupContactReveal() {
     contactSection.querySelectorAll('.category-group-header, .map-card, .contact-actions')
   );
 
-  let revealed = false;
-
-  function reveal() {
-    if (revealed) return;
-    revealed = true;
-    observer.disconnect();
-    animate(
-      targets,
-      { opacity: [0, 1], y: [40, 0] },
-      { delay: stagger(0.14), duration: 0.55, easing: [0.22, 1, 0.36, 1] }
-    );
-  }
-
-  // Set hidden state only after confirming animate is ready
-  targets.forEach(el => { el.style.opacity = '0'; });
-
+  // Elements are always visible — animation is pure enhancement, never hides content
   const observer = new IntersectionObserver((entries) => {
-    if (entries.some(e => e.isIntersecting)) reveal();
+    if (!entries.some(e => e.isIntersecting)) return;
+    observer.disconnect();
+    animate(targets, { opacity: [0.4, 1] }, {
+      delay: stagger(0.12),
+      duration: 0.45,
+      easing: [0.22, 1, 0.36, 1]
+    });
   }, { threshold: 0.05 });
 
   observer.observe(contactSection);
-
-  // Safety net: if page is short enough that contact is already visible, reveal immediately
-  const rect = contactSection.getBoundingClientRect();
-  if (rect.top < window.innerHeight) reveal();
 }
 
 function animateNewCards() {
