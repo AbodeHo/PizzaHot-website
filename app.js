@@ -492,26 +492,22 @@ function openModalWithAnimation() {
 }
 
 function closeModalWithAnimation() {
-  if (typeof animate !== 'function') {
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-    return;
+  // Run exit animation if FM is available, then always close via setTimeout
+  if (typeof animate === 'function') {
+    try {
+      animate(modalContent, { opacity: [1, 0], scale: [1, 0.93], y: [0, 12] }, { duration: 0.18, easing: 'ease-in' });
+      animate(modal, { opacity: [1, 0] }, { duration: 0.2, easing: 'ease-in' });
+    } catch (e) { /* ignore FM errors */ }
   }
 
-  const done = animate(
-    modalContent,
-    { opacity: [1, 0], scale: [1, 0.93], y: [0, 12] },
-    { duration: 0.18, easing: 'ease-in' }
-  );
-  animate(modal, { opacity: [1, 0] }, { duration: 0.2, easing: 'ease-in' });
-
-  done.finished.then(() => {
+  setTimeout(() => {
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
-    // Reset FM-set inline styles so next open starts clean
-    animate(modal, { opacity: 1 }, { duration: 0 });
-    animate(modalContent, { opacity: 1, scale: 1, y: 0 }, { duration: 0 });
-  });
+    // Clear any FM inline styles so the next open starts from a clean state
+    modal.style.opacity = '';
+    modalContent.style.opacity = '';
+    modalContent.style.transform = '';
+  }, typeof animate === 'function' ? 220 : 0);
 }
 
 // ============================================================
