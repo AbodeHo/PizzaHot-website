@@ -421,13 +421,12 @@ function init() {
 // FRAMER MOTION ANIMATIONS
 // ============================================================
 function setupFramerAnimations() {
-  if (!animate) return;
   setupNavScrollEffect();
   setupContactReveal();
 }
 
 function setupNavScrollEffect() {
-  if (!scroll) return;
+  if (typeof scroll !== 'function') return;
   const navContainer = document.querySelector('.nav-container');
 
   scroll(({ y }) => {
@@ -440,7 +439,8 @@ function setupNavScrollEffect() {
 }
 
 function setupContactReveal() {
-  if (!inView || !animate) return;
+  if (typeof animate !== 'function' || typeof stagger !== 'function') return;
+
   const contactSection = document.querySelector('.contact-section');
   if (!contactSection) return;
 
@@ -448,63 +448,64 @@ function setupContactReveal() {
     contactSection.querySelectorAll('.category-group-header, .map-card, .contact-actions')
   );
 
-  targets.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(40px)';
-  });
+  let revealed = false;
 
-  inView(contactSection, () => {
+  function reveal() {
+    if (revealed) return;
+    revealed = true;
+    observer.disconnect();
     animate(
       targets,
-      { opacity: 1, transform: 'translateY(0px)' },
-      { delay: stagger(0.14), duration: 0.6, easing: [0.22, 1, 0.36, 1] }
+      { opacity: [0, 1], y: [40, 0] },
+      { delay: stagger(0.14), duration: 0.55, easing: [0.22, 1, 0.36, 1] }
     );
-  }, { amount: 0.15 });
+  }
+
+  // Set hidden state only after confirming animate is ready
+  targets.forEach(el => { el.style.opacity = '0'; });
+
+  const observer = new IntersectionObserver((entries) => {
+    if (entries.some(e => e.isIntersecting)) reveal();
+  }, { threshold: 0.05 });
+
+  observer.observe(contactSection);
+
+  // Safety net: if page is short enough that contact is already visible, reveal immediately
+  const rect = contactSection.getBoundingClientRect();
+  if (rect.top < window.innerHeight) reveal();
 }
 
 function animateNewCards() {
-  if (!animate) return;
+  if (typeof animate !== 'function') return;
 
   const elements = Array.from(
     pizzaGrid.querySelectorAll('.pizza-card, .category-group-header')
   );
   if (elements.length === 0) return;
 
-  // Set initial hidden state before browser paints them
-  elements.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(28px)';
-  });
-
-  requestAnimationFrame(() => {
-    animate(
-      elements,
-      { opacity: 1, transform: 'translateY(0px)' },
-      { delay: stagger(0.045), duration: 0.38, easing: [0.22, 1, 0.36, 1] }
-    );
-  });
+  // Use FM array syntax [from, to] so no manual inline-style needed
+  animate(
+    elements,
+    { opacity: [0, 1], y: [28, 0] },
+    { delay: stagger(0.045), duration: 0.38, easing: [0.22, 1, 0.36, 1] }
+  );
 }
 
 function openModalWithAnimation() {
-  if (!animate) {
-    modal.style.display = 'flex';
-    return;
-  }
   modal.style.display = 'flex';
-  modal.style.opacity = '0';
-  modalContent.style.transform = 'scale(0.92) translateY(24px)';
-  modalContent.style.opacity = '0';
+  if (typeof animate !== 'function') return;
 
+  // Use individual transform components — FM DOM requires y/scale, not transform strings
   animate(modal, { opacity: [0, 1] }, { duration: 0.22, easing: 'ease-out' });
   animate(
     modalContent,
-    { opacity: [0, 1], transform: ['scale(0.92) translateY(24px)', 'scale(1) translateY(0px)'] },
-    { duration: 0.38, easing: [0.22, 1, 0.36, 1] }
+    { opacity: [0, 1], scale: [0.93, 1], y: [20, 0] },
+    { duration: 0.36, easing: [0.22, 1, 0.36, 1] }
   );
 }
 
 function closeModalWithAnimation() {
-  if (!animate) {
+  if (typeof animate !== 'function') {
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
     return;
@@ -512,18 +513,17 @@ function closeModalWithAnimation() {
 
   const done = animate(
     modalContent,
-    { opacity: [1, 0], transform: ['scale(1) translateY(0px)', 'scale(0.93) translateY(16px)'] },
-    { duration: 0.2, easing: 'ease-in' }
+    { opacity: [1, 0], scale: [1, 0.93], y: [0, 12] },
+    { duration: 0.18, easing: 'ease-in' }
   );
-  animate(modal, { opacity: [1, 0] }, { duration: 0.22, easing: 'ease-in' });
+  animate(modal, { opacity: [1, 0] }, { duration: 0.2, easing: 'ease-in' });
 
   done.finished.then(() => {
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
-    // Reset inline styles for next open
-    modal.style.opacity = '';
-    modalContent.style.transform = '';
-    modalContent.style.opacity = '';
+    // Reset FM-set inline styles so next open starts clean
+    animate(modal, { opacity: 1 }, { duration: 0 });
+    animate(modalContent, { opacity: 1, scale: 1, y: 0 }, { duration: 0 });
   });
 }
 

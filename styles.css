@@ -201,6 +201,9 @@ h1, h2, h3 {
 [dir="rtl"] .logo-text {
     font-family: 'Cairo', serif;
     font-weight: 800;
+    font-size: clamp(0.7rem, 3.1vw, 1.6rem);
+    letter-spacing: 0;
+    text-overflow: clip;
 }
 
 /* Language Switcher */
