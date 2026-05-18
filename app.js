@@ -1,7 +1,11 @@
 /**
  * Pizza Hot - Interactive Menu Engine
- * Built for a professional, premium experience.
+ * Redesigned with UI/UX Pro Max + Framer Motion
  */
+
+// Framer Motion DOM API (exposed as Motion global by dom.js)
+// eslint-disable-next-line no-undef
+const { animate, inView, scroll, stagger } = (typeof Motion !== 'undefined' ? Motion : {});
 
 const menuData = [
   // Categories: vegetables, chicken, hot_meats, cold_meats, choice, appetizers, salads, sauces, drinks
@@ -375,7 +379,7 @@ const menuData = [
   }
 ];
 
-// State Management
+// State
 let currentLang = 'ar';
 let currentCategory = 'all';
 
@@ -391,37 +395,146 @@ const categoryConfig = {
   drinks: { ar: "المشروبات", en: "Drinks" }
 };
 
-// DOM Elements
+// DOM elements
 const pizzaGrid = document.getElementById('pizzaGrid');
 const filterTabs = document.querySelectorAll('.filter-tab');
 const langButtons = document.querySelectorAll('.lang-btn');
 const modal = document.getElementById('pizzaModal');
-const closeModal = document.getElementById('closeModal');
+const modalContent = modal.querySelector('.modal-content');
+const closeModalBtn = document.getElementById('closeModal');
 
-/**
- * Format price with thousands separator
- */
 function formatPrice(num) {
   return new Intl.NumberFormat().format(num);
 }
 
-/**
- * Initialize Application
- */
+// ============================================================
+// INIT
+// ============================================================
 function init() {
   renderPizzas();
   setupEventListeners();
   setupFloatingBackground();
+  setupFramerAnimations();
 }
 
-/**
- * Dynamically generate high-density floating background elements
- */
+// ============================================================
+// FRAMER MOTION ANIMATIONS
+// ============================================================
+function setupFramerAnimations() {
+  if (!animate) return;
+  setupNavScrollEffect();
+  setupContactReveal();
+}
+
+function setupNavScrollEffect() {
+  if (!scroll) return;
+  const navContainer = document.querySelector('.nav-container');
+
+  scroll(({ y }) => {
+    const p = Math.min(y.progress * 40, 1); // reach full opacity quickly
+    navContainer.style.background = `rgba(5, 5, 7, ${0.72 + p * 0.24})`;
+    navContainer.style.boxShadow = p > 0.1
+      ? `0 8px 32px rgba(0,0,0,${0.4 + p * 0.25}), 0 1px 0 rgba(255,255,255,0.04) inset`
+      : '';
+  });
+}
+
+function setupContactReveal() {
+  if (!inView || !animate) return;
+  const contactSection = document.querySelector('.contact-section');
+  if (!contactSection) return;
+
+  const targets = Array.from(
+    contactSection.querySelectorAll('.category-group-header, .map-card, .contact-actions')
+  );
+
+  targets.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(40px)';
+  });
+
+  inView(contactSection, () => {
+    animate(
+      targets,
+      { opacity: 1, transform: 'translateY(0px)' },
+      { delay: stagger(0.14), duration: 0.6, easing: [0.22, 1, 0.36, 1] }
+    );
+  }, { amount: 0.15 });
+}
+
+function animateNewCards() {
+  if (!animate) return;
+
+  const elements = Array.from(
+    pizzaGrid.querySelectorAll('.pizza-card, .category-group-header')
+  );
+  if (elements.length === 0) return;
+
+  // Set initial hidden state before browser paints them
+  elements.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(28px)';
+  });
+
+  requestAnimationFrame(() => {
+    animate(
+      elements,
+      { opacity: 1, transform: 'translateY(0px)' },
+      { delay: stagger(0.045), duration: 0.38, easing: [0.22, 1, 0.36, 1] }
+    );
+  });
+}
+
+function openModalWithAnimation() {
+  if (!animate) {
+    modal.style.display = 'flex';
+    return;
+  }
+  modal.style.display = 'flex';
+  modal.style.opacity = '0';
+  modalContent.style.transform = 'scale(0.92) translateY(24px)';
+  modalContent.style.opacity = '0';
+
+  animate(modal, { opacity: [0, 1] }, { duration: 0.22, easing: 'ease-out' });
+  animate(
+    modalContent,
+    { opacity: [0, 1], transform: ['scale(0.92) translateY(24px)', 'scale(1) translateY(0px)'] },
+    { duration: 0.38, easing: [0.22, 1, 0.36, 1] }
+  );
+}
+
+function closeModalWithAnimation() {
+  if (!animate) {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    return;
+  }
+
+  const done = animate(
+    modalContent,
+    { opacity: [1, 0], transform: ['scale(1) translateY(0px)', 'scale(0.93) translateY(16px)'] },
+    { duration: 0.2, easing: 'ease-in' }
+  );
+  animate(modal, { opacity: [1, 0] }, { duration: 0.22, easing: 'ease-in' });
+
+  done.finished.then(() => {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    // Reset inline styles for next open
+    modal.style.opacity = '';
+    modalContent.style.transform = '';
+    modalContent.style.opacity = '';
+  });
+}
+
+// ============================================================
+// FLOATING BACKGROUND
+// ============================================================
 function setupFloatingBackground() {
   const container = document.getElementById('floatingBg');
   if (!container) return;
 
-  const count = 60; // 50+ as requested
+  const count = 60;
   const fragments = document.createDocumentFragment();
 
   for (let i = 0; i < count; i++) {
@@ -430,12 +543,12 @@ function setupFloatingBackground() {
 
     item.src = isMushroom ? 'images/bg/mushroom.png' : 'images/bg/pepper.png';
     item.className = `floating-item ${isMushroom ? 'mushroom' : 'pepper'}`;
+    item.alt = '';
 
-    // Randomize positioning
     const top = Math.random() * 100;
     const left = Math.random() * 100;
-    const delay = Math.random() * -20; // Negative delay so they start at different states
-    const duration = 15 + Math.random() * 20; // 15s to 35s
+    const delay = Math.random() * -20;
+    const duration = 15 + Math.random() * 20;
 
     item.style.top = `${top}%`;
     item.style.left = `${left}%`;
@@ -448,10 +561,9 @@ function setupFloatingBackground() {
   container.appendChild(fragments);
 }
 
-
-/**
- * Render Pizza Cards
- */
+// ============================================================
+// RENDER PIZZAS
+// ============================================================
 function renderPizzas() {
   pizzaGrid.innerHTML = '';
 
@@ -459,7 +571,6 @@ function renderPizzas() {
     currentCategory === 'all' || item.category === currentCategory
   );
 
-  // Group items by category if "All" is selected
   const groups = {};
   if (currentCategory === 'all') {
     filteredItems.forEach(item => {
@@ -470,64 +581,63 @@ function renderPizzas() {
     groups[currentCategory] = filteredItems;
   }
 
-  // Iterate through groups and render
   Object.keys(groups).forEach((catKey) => {
     const groupItems = groups[catKey];
     if (groupItems.length === 0) return;
 
-    // Add Category Header (Only if multiple categories are visible or if filtered)
     const header = document.createElement('div');
     header.className = 'category-group-header animate-fade-in category-section';
-    header.id = `cat-${catKey}`; // Anchor for ScrollSpy
-    const catName = categoryConfig[catKey] ?
-      (currentLang === 'ar' ? categoryConfig[catKey].ar : categoryConfig[catKey].en) :
-      catKey;
+    header.id = `cat-${catKey}`;
+    const catName = categoryConfig[catKey]
+      ? (currentLang === 'ar' ? categoryConfig[catKey].ar : categoryConfig[catKey].en)
+      : catKey;
     header.innerHTML = `<h2>${catName}</h2><div class="header-line"></div>`;
     pizzaGrid.appendChild(header);
 
-    groupItems.forEach((item, index) => {
+    groupItems.forEach((item) => {
       const card = document.createElement('div');
       card.className = 'pizza-card animate-fade-in';
-      card.style.animationDelay = `${index * 0.05}s`;
 
       const name = currentLang === 'ar' ? item.name_ar : item.name_en;
       const desc = currentLang === 'ar' ? item.desc_ar : item.desc_en;
 
       let priceDisplay = '';
       if (item.prices) {
-        const minPrice = item.prices.small;
-        priceDisplay = currentLang === 'ar' ? `بدءاً من ${formatPrice(minPrice)}` : `From ${formatPrice(minPrice)}`;
+        priceDisplay = currentLang === 'ar'
+          ? `بدءاً من ${formatPrice(item.prices.small)}`
+          : `From ${formatPrice(item.prices.small)}`;
       } else {
         priceDisplay = formatPrice(item.price);
       }
 
       card.innerHTML = `
-              <div class="pizza-img-box" onclick="openItemDetails(${item.id})">
-                  <img src="${item.image}" alt="${name}" class="pizza-img" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000'">
-              </div>
-              <div class="pizza-content">
-                  <h3 class="pizza-title">${name}</h3>
-                  <p class="pizza-desc">${desc}</p>
-                  <div class="pizza-footer">
-                      <span class="pizza-price">${priceDisplay}</span>
-                      <button class="btn-order" onclick="openItemDetails(${item.id})">
-                          ${currentLang === 'ar' ? 'التفاصيل' : 'Details'}
-                      </button>
-                  </div>
-              </div>
-          `;
+        <div class="pizza-img-box" onclick="openItemDetails(${item.id})">
+          <img src="${item.image}" alt="${name}" class="pizza-img"
+            onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000'">
+        </div>
+        <div class="pizza-content">
+          <h3 class="pizza-title">${name}</h3>
+          <p class="pizza-desc">${desc}</p>
+          <div class="pizza-footer">
+            <span class="pizza-price">${priceDisplay}</span>
+            <button class="btn-order" onclick="openItemDetails(${item.id})">
+              ${currentLang === 'ar' ? 'التفاصيل' : 'Details'}
+            </button>
+          </div>
+        </div>
+      `;
 
       pizzaGrid.appendChild(card);
     });
   });
 
-  // Re-initialize ScrollSpy after rendering
   setupCategoryScrollSpy();
+  animateNewCards();
 }
 
-/**
- * Open Modal with Item Details
- */
+// ============================================================
+// MODAL
+// ============================================================
 window.openItemDetails = function (id) {
   const item = menuData.find(p => p.id === id);
   if (!item) return;
@@ -541,8 +651,6 @@ window.openItemDetails = function (id) {
 
   const priceContainer = document.getElementById('modalPizzaPrice');
   const crustContainer = document.getElementById('modalPizzaCrust');
-
-  // Reset crust container
   crustContainer.innerHTML = '';
 
   function getPriceHtml(price) {
@@ -562,52 +670,52 @@ window.openItemDetails = function (id) {
   }
 
   if (item.prices) {
-    // Show sizes + Initial Small price
-    const initialPrice = item.prices.small;
     priceContainer.innerHTML = `
-        ${getPriceHtml(initialPrice)}
-        <div class="size-selector">
-            <button class="size-btn active" onclick="updatePrice(this, ${item.id}, 'small', ${item.prices.small})">${currentLang === 'ar' ? 'صغير' : 'Small'}</button>
-            <button class="size-btn" onclick="updatePrice(this, ${item.id}, 'medium', ${item.prices.medium})">${currentLang === 'ar' ? 'وسط' : 'Medium'}</button>
-            <button class="size-btn" onclick="updatePrice(this, ${item.id}, 'large', ${item.prices.large})">${currentLang === 'ar' ? 'كبير' : 'Large'}</button>
-        </div>
+      ${getPriceHtml(item.prices.small)}
+      <div class="size-selector">
+        <button class="size-btn active" onclick="updatePrice(this,${item.id},'small',${item.prices.small})">
+          ${currentLang === 'ar' ? 'صغير' : 'Small'}
+        </button>
+        <button class="size-btn" onclick="updatePrice(this,${item.id},'medium',${item.prices.medium})">
+          ${currentLang === 'ar' ? 'وسط' : 'Medium'}
+        </button>
+        <button class="size-btn" onclick="updatePrice(this,${item.id},'large',${item.prices.large})">
+          ${currentLang === 'ar' ? 'كبير' : 'Large'}
+        </button>
+      </div>
     `;
-
-    // Add Crust Options for Pizzas
     crustContainer.innerHTML = `
-        <span class="modal-info-label">${currentLang === 'ar' ? 'نوع العجينة' : 'Crust Type'}</span>
-        <div class="crust-selector">
-            <button class="crust-btn active" onclick="selectCrust(this)">${currentLang === 'ar' ? 'اورجينال' : 'Original'}</button>
-            <button class="crust-btn" onclick="selectCrust(this)">${currentLang === 'ar' ? 'رقيقة' : 'Thin'}</button>
-        </div>
+      <span class="modal-info-label">${currentLang === 'ar' ? 'نوع العجينة' : 'Crust Type'}</span>
+      <div class="crust-selector">
+        <button class="crust-btn active" onclick="selectCrust(this)">
+          ${currentLang === 'ar' ? 'اورجينال' : 'Original'}
+        </button>
+        <button class="crust-btn" onclick="selectCrust(this)">
+          ${currentLang === 'ar' ? 'رقيقة' : 'Thin'}
+        </button>
+      </div>
     `;
   } else {
     priceContainer.innerHTML = getPriceHtml(item.price);
   }
 
-  modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
+  openModalWithAnimation();
 };
 
-/**
- * Handle Crust Selection
- */
 window.selectCrust = function (btn) {
   const container = btn.closest('.crust-selector');
   container.querySelectorAll('.crust-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 };
 
-window.updatePrice = function (btn, id, size, price) {
+window.updatePrice = function (btn, id, _size, price) {
   const item = menuData.find(p => p.id === id);
   if (!item || !item.prices) return;
 
-  // Update active class
-  const buttons = document.querySelectorAll('.size-btn');
-  buttons.forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
-  // Update Dual Price Display
   const oldSyp = price * 100;
   const wrapper = document.querySelector('.dual-price-wrapper');
   if (wrapper) {
@@ -624,12 +732,11 @@ window.updatePrice = function (btn, id, size, price) {
   }
 };
 
-
-/**
- * Setup Event Listeners
- */
+// ============================================================
+// EVENT LISTENERS
+// ============================================================
 function setupEventListeners() {
-  // Language Toggle
+  // Language toggle
   langButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       langButtons.forEach(b => b.classList.remove('active'));
@@ -642,12 +749,11 @@ function setupEventListeners() {
     });
   });
 
-  // Category Filter
+  // Category filter
   filterTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const category = tab.dataset.category;
 
-      // If already in 'all' mode and clicking a category, scroll to it
       if (currentCategory === 'all' && category !== 'all') {
         const targetSection = document.getElementById(`cat-${category}`);
         if (targetSection) {
@@ -661,55 +767,39 @@ function setupEventListeners() {
       currentCategory = category;
       renderPizzas();
 
-      // If switched to 'all', scroll to top of menu
       if (category === 'all') {
         const menuTop = document.querySelector('.menu-section').offsetTop;
-        window.scrollTo({
-          top: menuTop - 80,
-          behavior: 'smooth'
-        });
+        window.scrollTo({ top: menuTop - 80, behavior: 'smooth' });
       }
     });
   });
 
-  // Close Modal
-  closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
+  // Close modal
+  closeModalBtn.addEventListener('click', closeModalWithAnimation);
+
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) closeModalWithAnimation();
   });
 
-  window.onclick = (event) => {
-    if (event.target === modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-  };
-
-  // Header Location Shortcut
+  // Header location shortcut
   const headerLocationBtn = document.getElementById('headerLocationBtn');
   if (headerLocationBtn) {
     headerLocationBtn.addEventListener('click', () => {
       const locationSection = document.getElementById('location');
-      if (locationSection) {
-        locationSection.scrollIntoView({ behavior: 'smooth' });
-      }
+      if (locationSection) locationSection.scrollIntoView({ behavior: 'smooth' });
     });
   }
 }
 
-/**
- * Update non-dynamic UI text based on language
- */
 function updateStaticText() {
   document.querySelectorAll('[data-ar]').forEach(el => {
     el.innerText = el.getAttribute(`data-${currentLang}`);
   });
 }
 
-/**
- * Pro Pizza Scroll Animation Logic (Canvas Sequence Player)
- * Features: High-performance Canvas, Smooth Interpolation, and Unified UI Sync
- */
+// ============================================================
+// HERO SCROLL — Canvas Sequence Player
+// ============================================================
 function setupProScrollAnimation() {
   const container = document.querySelector('.pizza-scroll-container');
   const canvas = document.getElementById('pizzaCanvas');
@@ -723,24 +813,18 @@ function setupProScrollAnimation() {
 
   const frameCount = 56;
   const framePath = 'images/pizza cut in half/ezgif-frame-';
-  const frames = []; // Stores processed transparent canvases
+  const frames = [];
   let imagesLoaded = 0;
-
-  // Optimized smoothing state
   let scrollProgress = 0;
   let smoothedProgress = 0;
   let currentFrameIndex = -1;
-
-  // Smoothing constant (0.1 for high-end inertia)
   const lerpFactor = 0.1;
 
-  // Chroma Key processing
   const tempCanvas = document.createElement('canvas');
   tempCanvas.width = canvas.width;
   tempCanvas.height = canvas.height;
   const tCtx = tempCanvas.getContext('2d');
 
-  // 1. Preload and Process frames
   for (let i = 1; i <= frameCount; i++) {
     const img = new Image();
     const frameNum = i.toString().padStart(3, '0');
@@ -750,11 +834,9 @@ function setupProScrollAnimation() {
       try {
         tCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
         tCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
-
         const imageData = tCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
         const data = imageData.data;
 
-        // Chroma Key: Black to Transparent
         for (let j = 0; j < data.length; j += 4) {
           if (data[j] < 20 && data[j + 1] < 20 && data[j + 2] < 20) {
             data[j + 3] = 0;
@@ -768,36 +850,27 @@ function setupProScrollAnimation() {
         offscreen.getContext('2d').drawImage(tempCanvas, 0, 0);
         frames[index] = offscreen;
       } catch (e) {
-        console.warn("Falling back to CSS blending.");
         canvas.style.mixBlendMode = 'screen';
         frames[index] = img;
       }
 
       imagesLoaded++;
-      if (imagesLoaded === frameCount) {
-        startAnimationLoop();
-      }
+      if (imagesLoaded === frameCount) startAnimationLoop();
     };
     img.src = `${framePath}${frameNum}.jpg`;
   }
 
-  // 2. Optimized Scroll Listener
   window.addEventListener('scroll', () => {
     const rect = container.getBoundingClientRect();
     const progress = -rect.top / (rect.height - window.innerHeight);
     scrollProgress = Math.max(0, Math.min(1, progress));
   }, { passive: true });
 
-  // 3. Smooth Animation Loop (Time-independent)
   function startAnimationLoop() {
     function render() {
-      // Apply linear interpolation for buttery smoothness
       smoothedProgress += (scrollProgress - smoothedProgress) * lerpFactor;
-
-      // Map to frame index
       const targetFrame = Math.round(smoothedProgress * (frameCount - 1));
 
-      // Only redraw if frame changed
       if (targetFrame !== currentFrameIndex) {
         currentFrameIndex = targetFrame;
         const frame = frames[currentFrameIndex];
@@ -807,98 +880,81 @@ function setupProScrollAnimation() {
         }
       }
 
-      // Sync UI elements to the SMOOTHED progress
       updateUIStates(smoothedProgress);
-
       requestAnimationFrame(render);
     }
     render();
   }
 
   function updateUIStates(progress) {
-    // Dynamic Scaled Side Pills - "Rise and Disappear" Effect
-    // Pill 1 (Left Content) - Centered, Vertical Rise Only
+    // Left pill
     const p1Start = 0.1, p1End = 0.5;
     const p1Factor = Math.max(0, Math.min(1, (progress - p1Start) / (p1End - p1Start)));
     const p1Alpha = p1Factor > 0 && p1Factor < 1 ? Math.sin(Math.PI * p1Factor) : 0;
     const p1Rise = 300 - (p1Factor * 800);
-
     pillLeft.style.opacity = p1Alpha;
-    pillLeft.style.transform = `translate(-50%, calc(-50% + ${p1Rise}px)) scale(${1 + (p1Alpha * 0.1)})`;
+    pillLeft.style.transform = `translate(-50%, calc(-50% + ${p1Rise}px)) scale(${1 + p1Alpha * 0.1})`;
     pillLeft.style.visibility = p1Alpha > 0.01 ? 'visible' : 'hidden';
 
-    // Pill 2 (Right Content) - Centered, Vertical Rise Only
+    // Right pill
     const p2Start = 0.4, p2End = 0.8;
     const p2Factor = Math.max(0, Math.min(1, (progress - p2Start) / (p2End - p2Start)));
     const p2Alpha = p2Factor > 0 && p2Factor < 1 ? Math.sin(Math.PI * p2Factor) : 0;
     const p2Rise = 300 - (p2Factor * 800);
-
     pillRight.style.opacity = p2Alpha;
-    pillRight.style.transform = `translate(-50%, calc(-50% + ${p2Rise}px)) scale(${1 + (p2Alpha * 0.1)})`;
+    pillRight.style.transform = `translate(-50%, calc(-50% + ${p2Rise}px)) scale(${1 + p2Alpha * 0.1})`;
     pillRight.style.visibility = p2Alpha > 0.01 ? 'visible' : 'hidden';
 
-
-    // Pizza Container Expansion
+    // Pizza scale
     const scaleProgress = Math.max(0, Math.min(1, progress / 0.5));
-    animationBox.style.transform = `scale(${1 + (scaleProgress * 0.4)})`;
+    animationBox.style.transform = `scale(${1 + scaleProgress * 0.4})`;
 
-    // Menu Section Reveal
+    // Menu section reveal
     const revealThreshold = 0.8;
-    const revealProgress = progress > revealThreshold ? (progress - revealThreshold) / (1 - revealThreshold) : 0;
+    const revealProgress = progress > revealThreshold
+      ? (progress - revealThreshold) / (1 - revealThreshold)
+      : 0;
 
     menuSection.style.opacity = revealProgress;
     menuSection.style.transform = `translateY(${(1 - revealProgress) * 150}px)`;
-    menuSection.style.zIndex = revealProgress > 0.9 ? "20" : "10";
+    menuSection.style.zIndex = revealProgress > 0.9 ? '20' : '10';
   }
-
-
 }
 
-// Start User Experience
-init();
-setupProScrollAnimation();
-setupCategoryScrollSpy();
-
-/**
- * Category ScrollSpy
- * Automatically highlights the active category in the filter bar during "All" view
- */
+// ============================================================
+// CATEGORY SCROLL SPY
+// ============================================================
 function setupCategoryScrollSpy() {
   if (currentCategory !== 'all') return;
 
   const sections = document.querySelectorAll('.category-section');
   const tabs = document.querySelectorAll('.filter-tab');
 
-  const observerOptions = {
-    root: null,
-    rootMargin: '-160px 0px -70% 0px', // Adjusted for sticky header
-    threshold: 0
-  };
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const id = entry.target.id.replace('cat-', '');
-
         tabs.forEach(tab => {
           if (tab.dataset.category === id) {
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
-
-            // Scroll tab into view if container is overflowing (mobile)
             tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
           }
         });
       }
     });
-  }, observerOptions);
+  }, {
+    root: null,
+    rootMargin: '-160px 0px -70% 0px',
+    threshold: 0
+  });
 
   sections.forEach(section => observer.observe(section));
 }
 
-/**
- * Branch Configuration for Contact Section
- */
+// ============================================================
+// BRANCH CONFIG & DIRECTIONS
+// ============================================================
 const branchConfig = {
   malki: {
     lat: 33.513412554802834,
@@ -919,47 +975,32 @@ const branchConfig = {
 
 let activeBranch = 'malki';
 
-/**
- * Switch the active branch and update the map
- */
 window.switchBranch = function (branchKey) {
   if (!branchConfig[branchKey]) return;
-
   activeBranch = branchKey;
 
-  // Update branch item active state
-  document.querySelectorAll('.branch-item').forEach(item => {
-    item.classList.remove('active');
-  });
+  document.querySelectorAll('.branch-item').forEach(item => item.classList.remove('active'));
   const activeEl = document.getElementById(`branch-${branchKey}`);
   if (activeEl) activeEl.classList.add('active');
 
-  // Update Map Iframe
   const mapIframe = document.getElementById('contactMap');
-  if (mapIframe) {
-    mapIframe.src = branchConfig[branchKey].mapUrl;
-  }
+  if (mapIframe) mapIframe.src = branchConfig[branchKey].mapUrl;
 
-  // Smooth scroll to map on mobile
   if (window.innerWidth < 992) {
     const mapCard = document.querySelector('.map-card');
-    if (mapCard) {
-      mapCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    if (mapCard) mapCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 };
 
-/**
- * Get Directions to the current active branch
- * Uses a direct Google Maps URL for reliable redirection on all devices.
- */
 window.getDirections = function () {
   const config = branchConfig[activeBranch];
-  const restaurantLat = config.lat;
-  const restaurantLng = config.lng;
-
-  // Direct URL avoids async callbacks that mobile browsers often block.
-  // Google Maps automatically handles "Your Location" if origin is omitted.
-  const url = `https://www.google.com/maps/dir/?api=1&destination=${restaurantLat},${restaurantLng}&travelmode=driving`;
+  const url = `https://www.google.com/maps/dir/?api=1&destination=${config.lat},${config.lng}&travelmode=driving`;
   window.open(url, '_blank');
 };
+
+// ============================================================
+// BOOT
+// ============================================================
+init();
+setupProScrollAnimation();
+setupCategoryScrollSpy();
