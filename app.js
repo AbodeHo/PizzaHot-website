@@ -791,38 +791,64 @@ function setupProScrollAnimation() {
     img.src = `${framePath}${frameNum}.jpg`;
   }
 
-  // 2. Optimized Scroll Listener
+  // 2. RAF loop state — stopped by default, woken by scroll
+  let rafId = null;
+  let loopActive = false;
+
+  function startLoop() {
+    if (!loopActive) {
+      loopActive = true;
+      rafId = requestAnimationFrame(render);
+    }
+  }
+
+  // Scroll listener wakes the loop and updates progress
   window.addEventListener('scroll', () => {
     const rect = container.getBoundingClientRect();
     const progress = -rect.top / (rect.height - window.innerHeight);
     scrollProgress = Math.max(0, Math.min(1, progress));
+    startLoop();
   }, { passive: true });
 
-  // 3. Smooth Animation Loop (Time-independent)
-  function startAnimationLoop() {
-    function render() {
-      // Apply linear interpolation for buttery smoothness
-      smoothedProgress += (scrollProgress - smoothedProgress) * lerpFactor;
-
-      // Map to frame index
-      const targetFrame = Math.round(smoothedProgress * (frameCount - 1));
-
-      // Only redraw if frame changed
-      if (targetFrame !== currentFrameIndex) {
-        currentFrameIndex = targetFrame;
-        const frame = frames[currentFrameIndex];
-        if (frame) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(frame, 0, 0, canvas.width, canvas.height);
-        }
+  // Pause the loop entirely when the hero section leaves the viewport
+  if (typeof IntersectionObserver !== 'undefined') {
+    new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting && rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+        loopActive = false;
       }
+    }, { threshold: 0 }).observe(container);
+  }
 
-      // Sync UI elements to the SMOOTHED progress
-      updateUIStates(smoothedProgress);
+  // 3. Render function — exits automatically once progress has settled
+  function render() {
+    const delta = scrollProgress - smoothedProgress;
+    smoothedProgress += delta * lerpFactor;
 
-      requestAnimationFrame(render);
+    const targetFrame = Math.round(smoothedProgress * (frameCount - 1));
+    if (targetFrame !== currentFrameIndex) {
+      currentFrameIndex = targetFrame;
+      const frame = frames[currentFrameIndex];
+      if (frame) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(frame, 0, 0, canvas.width, canvas.height);
+      }
     }
-    render();
+
+    updateUIStates(smoothedProgress);
+
+    if (Math.abs(delta) > 0.0005) {
+      rafId = requestAnimationFrame(render);
+    } else {
+      loopActive = false;
+      rafId = null;
+    }
+  }
+
+  // 4. Start the loop after images finish loading
+  function startAnimationLoop() {
+    startLoop();
   }
 
   function updateUIStates(progress) {

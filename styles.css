@@ -88,7 +88,6 @@ body {
         radial-gradient(ellipse at top left, rgba(220, 38, 38, 0.09) 0%, transparent 50%),
         radial-gradient(ellipse at bottom right, rgba(202, 138, 4, 0.06) 0%, transparent 50%),
         var(--bg-main);
-    background-attachment: fixed;
 }
 
 [lang="ar"],
@@ -305,7 +304,7 @@ h1, h2, h3 {
     justify-content: center;
     opacity: 1;
     transform: scale(1.1);
-    filter: drop-shadow(0 0 90px rgba(220, 38, 38, 0.3));
+    will-change: transform;
 }
 
 #pizzaCanvas {
@@ -337,6 +336,7 @@ h1, h2, h3 {
     z-index: 10;
     opacity: 0;
     transition: transform 0.1s linear;
+    will-change: transform, opacity;
     text-shadow:
         0 4px 24px rgba(0, 0, 0, 0.7),
         0 0 60px rgba(220, 38, 38, 0.4);
@@ -371,7 +371,7 @@ h1, h2, h3 {
     background: radial-gradient(circle at center, rgba(255, 255, 255, 0.45) 0%, transparent 70%);
     border-radius: 50%;
     animation: steamPro 4s infinite ease-in-out;
-    filter: blur(14px);
+    will-change: transform, opacity;
 }
 
 .steam-particle:nth-child(2) { animation-delay: 0.8s; }
@@ -393,6 +393,7 @@ h1, h2, h3 {
     background: transparent;
     opacity: 0;
     transform: translateY(100px);
+    will-change: transform, opacity;
 }
 
 .floating-bg {
@@ -469,16 +470,14 @@ h1, h2, h3 {
 
 /* Pizza Card — Glass Block Style */
 .pizza-card {
-    background: var(--bg-card);
+    background: var(--bg-card-solid);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    transition: var(--transition);
+    transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
     position: relative;
     text-align: center;
     cursor: pointer;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
@@ -988,7 +987,6 @@ h1, h2, h3 {
     width: clamp(55px, 9vw, 110px);
     height: auto;
     opacity: 0.08;
-    filter: blur(2px) brightness(0.75);
     animation: floatAround infinite ease-in-out;
     will-change: transform;
 }
@@ -1021,13 +1019,11 @@ h1, h2, h3 {
 }
 
 .map-card {
-    background: var(--bg-card);
+    background: var(--bg-card-solid);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-xl);
     overflow: hidden;
     box-shadow: var(--glass-shadow);
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
     transition: var(--transition);
 }
 
@@ -1059,13 +1055,11 @@ h1, h2, h3 {
 }
 
 .action-card {
-    background: var(--bg-card);
+    background: var(--bg-card-solid);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-xl);
     padding: clamp(1.25rem, 4vw, 2rem);
     text-align: center;
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
     box-shadow: var(--glass-shadow);
     transition: var(--transition);
     display: flex;
@@ -1329,6 +1323,28 @@ h1, h2, h3 {
         max-height: 38vh;
         padding: 1rem;
     }
+
+    /* Mobile perf: swap backdrop-filter for solid backgrounds */
+    .nav-container {
+        background: rgba(5, 5, 7, 0.96);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+    .filter-tabs {
+        background: rgba(5, 5, 7, 0.98);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+
+    /* Disable heavy animations on mobile */
+    .steam-container { display: none; }
+    .floating-item { display: none; }
+
+    /* Remove blend mode on mobile nav logo */
+    .nav-logo { mix-blend-mode: normal; }
+
+    /* Fix image sizes for animated canvas to prevent layout shifts */
+    #pizzaCanvas { width: 100%; height: 100%; }
 }
 
 @media (max-width: 380px) {
