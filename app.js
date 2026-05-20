@@ -381,10 +381,10 @@ let currentCategory = 'all';
 let categoryObserver = null;
 
 const categoryConfig = {
-  vegetables: { ar: "الخضروات", en: "Vegetables" },
-  chicken: { ar: "الدجاج", en: "Chicken" },
-  hot_meats: { ar: "اللحومات الساخنة", en: "Hot Meats" },
-  cold_meats: { ar: "اللحومات الباردة", en: "Cold Meats" },
+  vegetables: { ar: "بيتزا الخضار", en: "Vegetables pizza" },
+  chicken: { ar: "بيتزا الدجاج", en: "Chicken pizza" },
+  hot_meats: { ar: "بيتزا اللحومات الساخنة", en: "Hot Meats pizza" },
+  cold_meats: { ar: "بيتزا اللحومات الباردة", en: "Cold Meats pizza" },
   choice: { ar: "بيتزا حسب الطلب", en: "Choice Pizza" },
   appetizers: { ar: "المقبلات", en: "Appetizers" },
   salads: { ar: "السلطات", en: "Salads" },
