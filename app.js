@@ -1,11 +1,7 @@
 /**
  * Pizza Hot - Interactive Menu Engine
- * Redesigned with UI/UX Pro Max + Framer Motion
+ * Built for a professional, premium experience.
  */
-
-// Framer Motion DOM API (exposed as Motion global by dom.js)
-// eslint-disable-next-line no-undef
-const { animate, inView, scroll, stagger } = (typeof Motion !== 'undefined' ? Motion : {});
 
 const menuData = [
   // Categories: vegetables, chicken, hot_meats, cold_meats, choice, appetizers, salads, sauces, drinks
@@ -18,7 +14,7 @@ const menuData = [
     name_en: "Four Seasons",
     desc_ar: "فليفلة، بندورة، زيتون، فطر",
     desc_en: "Peppers, Tomatoes, Olives, Mushrooms",
-    prices: { small: 630, medium: 900, large: 1260 },
+    prices: { small: 600, medium: 850, large: 1200 },
     image: "images/pizzas/فصول.jpg"
   },
   {
@@ -28,7 +24,7 @@ const menuData = [
     name_en: "Mushroom",
     desc_ar: "صوص، جبنة، فطر",
     desc_en: "Sauce, Cheese, Mushroom",
-    prices: { small: 630, medium: 900, large: 1260 },
+    prices: { small: 600, medium: 850, large: 1200 },
     image: "images/pizzas/mushroom.png"
   },
   {
@@ -38,7 +34,7 @@ const menuData = [
     name_en: "Corn",
     desc_ar: "صوص، جبنة، ذرة",
     desc_en: "Sauce, Cheese, Corn",
-    prices: { small: 630, medium: 900, large: 1260 },
+    prices: { small: 600, medium: 850, large: 1200 },
     image: "images/pizzas/ذرة.jpg"
   },
   {
@@ -48,7 +44,7 @@ const menuData = [
     name_en: "Margherita",
     desc_ar: "صوص، جبنة",
     desc_en: "Sauce, Cheese",
-    prices: { small: 630, medium: 900, large: 1260 },
+    prices: { small: 600, medium: 850, large: 1200 },
     image: "images/pizzas/مرغريتا.jpg"
   },
   {
@@ -58,7 +54,7 @@ const menuData = [
     name_en: "Four Cheese",
     desc_ar: "أربع أنواع جبنة (بلو تشيز، بارميزان، تشيدر، موزاريلا)",
     desc_en: "Four types of cheese (Blue cheese, Parmesan, Cheddar, Mozzarella)",
-    prices: { small: 780, medium: 1150, large: 1560 },
+    prices: { small: 750, medium: 1100, large: 1500 },
     image: "images/pizzas/فورتشيز.jpg"
   },
 
@@ -70,7 +66,7 @@ const menuData = [
     name_en: "Shish Taouk",
     desc_ar: "صوص، جبنة، شيش طاووق",
     desc_en: "Sauce, Cheese, Shish Taouk",
-    prices: { small: 780, medium: 1150, large: 1560 },
+    prices: { small: 750, medium: 1100, large: 1500 },
     image: "images/pizzas/شيش.jpg"
   },
   {
@@ -80,7 +76,7 @@ const menuData = [
     name_en: "BBQ",
     desc_ar: "صوص الباربيكيو، جبنة، قطع دجاج، فطر",
     desc_en: "BBQ Sauce, Cheese, Chicken chunks, Mushroooms",
-    prices: { small: 780, medium: 1150, large: 1560 },
+    prices: { small: 750, medium: 1100, large: 1500 },
     image: "images/pizzas/باربكيو.jpg"
   },
   {
@@ -90,7 +86,7 @@ const menuData = [
     name_en: "Mexican",
     desc_ar: "صوص، جبنة، قطع دجاج حارة، فليفلة، بصل، بهارات مكسيكي",
     desc_en: "Sauce, Cheese, Spicy chicken, Peppers, Onions, Mexican spices",
-    prices: { small: 780, medium: 1150, large: 1560 },
+    prices: { small: 750, medium: 1100, large: 1500 },
     image: "images/pizzas/مكسيكي.jpg"
   },
   {
@@ -100,7 +96,7 @@ const menuData = [
     name_en: "Ranch (Normal or Spicy)",
     desc_ar: "صوص الرانش، جبنة، قطع دجاج، حبش مدخن",
     desc_en: "Ranch Sauce, Cheese, Chicken chunks, Smoked Turkey",
-    prices: { small: 780, medium: 1150, large: 1560 },
+    prices: { small: 750, medium: 1100, large: 1500 },
     image: "images/pizzas/ranch pizza.png"
   },
 
@@ -112,7 +108,7 @@ const menuData = [
     name_en: "Sausage",
     desc_ar: "صوص، جبنة، فطر، سجق",
     desc_en: "Sauce, Cheese, Mushroom, Sausage",
-    prices: { small: 780, medium: 1150, large: 1560 },
+    prices: { small: 750, medium: 1100, large: 1500 },
     image: "images/pizzas/سجق.jpg"
   },
   {
@@ -122,7 +118,7 @@ const menuData = [
     name_en: "Philadelphia Steak",
     desc_ar: "صوص الفيلادلفيا، جبنة، بصل، شرائح لحمة، فطر فريش، فليفلة",
     desc_en: "Philadelphia Sauce, Cheese, Onion, Meat slices, Fresh Mushroom, Peppers",
-    prices: { small: 780, medium: 1150, large: 1560 },
+    prices: { small: 750, medium: 1100, large: 1500 },
     image: "images/pizzas/philadelphia.png"
   },
   {
@@ -132,7 +128,7 @@ const menuData = [
     name_en: "Supreme",
     desc_ar: "صوص، جبنة، لحم مفروم، بيبيروني، فطر، فليفلة، زيتون",
     desc_en: "Sauce, Cheese, Minced meat, Pepperoni, Mushroom, Peppers, Olives",
-    prices: { small: 780, medium: 1150, large: 1560 },
+    prices: { small: 750, medium: 1100, large: 1500 },
     image: "images/pizzas/سوبريم.jpg"
   },
 
@@ -144,7 +140,7 @@ const menuData = [
     name_en: "Salami",
     desc_ar: "صوص، جبنة، سلامي",
     desc_en: "Sauce, Cheese, Salami",
-    prices: { small: 730, medium: 1100, large: 1460 },
+    prices: { small: 700, medium: 1050, large: 1400 },
     image: "images/pizzas/سلامي.jpg"
   },
   {
@@ -154,7 +150,7 @@ const menuData = [
     name_en: "Pepperoni",
     desc_ar: "صوص، جبنة، بيبيروني",
     desc_en: "Sauce, Cheese, Pepperoni",
-    prices: { small: 730, medium: 1100, large: 1460 },
+    prices: { small: 700, medium: 1050, large: 1400 },
     image: "images/pizzas/ببروني.jpg"
   },
   {
@@ -164,7 +160,7 @@ const menuData = [
     name_en: "Hot Dog",
     desc_ar: "صوص، جبنة، هوت دوغ",
     desc_en: "Sauce, Cheese, Hot Dog",
-    prices: { small: 730, medium: 1100, large: 1460 },
+    prices: { small: 700, medium: 1050, large: 1400 },
     image: "images/pizzas/هةت دوغ.jpg"
   },
   {
@@ -174,7 +170,7 @@ const menuData = [
     name_en: "Smoked Turkey",
     desc_ar: "صوص، جبنة، حبش مدخن",
     desc_en: "Sauce, Cheese, Smoked Turkey",
-    prices: { small: 730, medium: 1100, large: 1460 },
+    prices: { small: 700, medium: 1050, large: 1400 },
     image: "images/pizzas/حبش.jpg"
   },
   {
@@ -184,7 +180,7 @@ const menuData = [
     name_en: "Smoked Beef Roast",
     desc_ar: "صوص، جبنة، روستو بقر",
     desc_en: "Sauce, Cheese, Smoked Beef Roast",
-    prices: { small: 730, medium: 1100, large: 1460 },
+    prices: { small: 700, medium: 1050, large: 1400 },
     image: "images/pizzas/سلامي.jpg"
   },
   {
@@ -194,7 +190,7 @@ const menuData = [
     name_en: "Mixed Cold Meats",
     desc_ar: "صوص، جبنة، سلامي، بيبيروني، هوت دوغ، حبش مدخن",
     desc_en: "Sauce, Cheese, Salami, Pepperoni, Hot Dog, Smoked Turkey",
-    prices: { small: 830, medium: 1250, large: 1660 },
+    prices: { small: 800, medium: 1200, large: 1600 },
     image: "images/pizzas/لحومات باردة.jpg"
   },
 
@@ -206,7 +202,7 @@ const menuData = [
     name_en: "Half and Half Pizza",
     desc_ar: "حسب الطلب",
     desc_en: "As per order",
-    prices: { small: 780, medium: 1150, large: 1560 },
+    prices: { small: 750, medium: 1100, large: 1500 },
     image: "images/pizzas/مشكلة.jpg"
   },
   {
@@ -216,7 +212,7 @@ const menuData = [
     name_en: "Third and Third Pizza",
     desc_ar: "صوص، جبنة، هوت دوغ، شيش، سجق",
     desc_en: "Sauce, Cheese, Hot Dog, Shish, Sausage",
-    prices: { small: 830, medium: 1250, large: 1660 },
+    prices: { small: 800, medium: 1200, large: 1600 },
     image: "images/pizzas/كل تلت شكل.jpg"
   },
   {
@@ -226,7 +222,7 @@ const menuData = [
     name_en: "Quarter and Quarter Pizza",
     desc_ar: "صوص، جبنة، هوت دوغ، حبش، بيبيروني، ذرة",
     desc_en: "Sauce, Cheese, Hot Dog, Turkey, Pepperoni, Corn",
-    prices: { small: 830, medium: 1250, large: 1660 },
+    prices: { small: 800, medium: 1200, large: 1600 },
     image: "images/pizzas/مشكلة.jpg"
   },
   {
@@ -236,7 +232,7 @@ const menuData = [
     name_en: "Hot Meats (Third and Third)",
     desc_ar: "حسب الطلب",
     desc_en: "As per order",
-    prices: { small: 880, medium: 1350, large: 1760 },
+    prices: { small: 850, medium: 1300, large: 1700 },
     image: "images/pizzas/كل تلت شكل.jpg"
   },
 
@@ -248,7 +244,7 @@ const menuData = [
     name_en: "Cheese Fries",
     desc_ar: "بطاطا، جبنة موزاريلا، صوص أبيض، بهارات",
     desc_en: "Fries, Mozzarella, White sauce, Spices",
-    price: 430,
+    price: 400,
     image: "images/pizzas/بطاطا بالجبنة.JPG"
   },
   {
@@ -258,7 +254,7 @@ const menuData = [
     name_en: "BBQ Fries",
     desc_ar: "بطاطا، جبنة موزاريلا، صوص باربيكيو، صوص أبيض",
     desc_en: "Fries, Mozzarella, BBQ sauce, White sauce",
-    price: 470,
+    price: 450,
     image: "images/pizzas/بطاطا باربكيو.png"
   },
   {
@@ -268,7 +264,7 @@ const menuData = [
     name_en: "Plain Fries",
     desc_ar: "بطاطا مقلية",
     desc_en: "Fried potatoes",
-    price: 330,
+    price: 300,
     image: "images/pizzas/بطاطا.JPG"
   },
 
@@ -290,7 +286,7 @@ const menuData = [
     name_en: "Caesar Salad",
     desc_ar: "خس، توست، دجاج، صوص سيزر، جبنة بارميزان",
     desc_en: "Lettuce, Toast, Chicken, Caesar sauce, Parmesan cheese",
-    price: 470,
+    price: 450,
     image: "images/pizzas/سيزر.jpg"
   },
 
@@ -379,9 +375,10 @@ const menuData = [
   }
 ];
 
-// State
+// State Management
 let currentLang = 'ar';
 let currentCategory = 'all';
+let categoryObserver = null;
 
 const categoryConfig = {
   vegetables: { ar: "الخضروات", en: "Vegetables" },
@@ -395,129 +392,37 @@ const categoryConfig = {
   drinks: { ar: "المشروبات", en: "Drinks" }
 };
 
-// DOM elements
+// DOM Elements
 const pizzaGrid = document.getElementById('pizzaGrid');
 const filterTabs = document.querySelectorAll('.filter-tab');
 const langButtons = document.querySelectorAll('.lang-btn');
 const modal = document.getElementById('pizzaModal');
-const modalContent = modal.querySelector('.modal-content');
-const closeModalBtn = document.getElementById('closeModal');
+const closeModal = document.getElementById('closeModal');
 
+/**
+ * Format price with thousands separator
+ */
 function formatPrice(num) {
   return new Intl.NumberFormat().format(num);
 }
 
-// ============================================================
-// INIT
-// ============================================================
+/**
+ * Initialize Application
+ */
 function init() {
   renderPizzas();
   setupEventListeners();
   setupFloatingBackground();
-  setupFramerAnimations();
 }
 
-// ============================================================
-// FRAMER MOTION ANIMATIONS
-// ============================================================
-function setupFramerAnimations() {
-  setupNavScrollEffect();
-  setupContactReveal();
-}
-
-function setupNavScrollEffect() {
-  if (typeof scroll !== 'function') return;
-  const navContainer = document.querySelector('.nav-container');
-
-  scroll(({ y }) => {
-    const p = Math.min(y.progress * 40, 1); // reach full opacity quickly
-    navContainer.style.background = `rgba(5, 5, 7, ${0.72 + p * 0.24})`;
-    navContainer.style.boxShadow = p > 0.1
-      ? `0 8px 32px rgba(0,0,0,${0.4 + p * 0.25}), 0 1px 0 rgba(255,255,255,0.04) inset`
-      : '';
-  });
-}
-
-function setupContactReveal() {
-  if (typeof animate !== 'function' || typeof stagger !== 'function') return;
-
-  const contactSection = document.querySelector('.contact-section');
-  if (!contactSection) return;
-
-  const targets = Array.from(
-    contactSection.querySelectorAll('.category-group-header, .map-card, .contact-actions')
-  );
-
-  // Elements are always visible — animation is pure enhancement, never hides content
-  const observer = new IntersectionObserver((entries) => {
-    if (!entries.some(e => e.isIntersecting)) return;
-    observer.disconnect();
-    animate(targets, { opacity: [0.4, 1] }, {
-      delay: stagger(0.12),
-      duration: 0.45,
-      easing: [0.22, 1, 0.36, 1]
-    });
-  }, { threshold: 0.05 });
-
-  observer.observe(contactSection);
-}
-
-function animateNewCards() {
-  if (typeof animate !== 'function') return;
-
-  const elements = Array.from(
-    pizzaGrid.querySelectorAll('.pizza-card, .category-group-header')
-  );
-  if (elements.length === 0) return;
-
-  // Use FM array syntax [from, to] so no manual inline-style needed
-  animate(
-    elements,
-    { opacity: [0, 1], y: [28, 0] },
-    { delay: stagger(0.045), duration: 0.38, easing: [0.22, 1, 0.36, 1] }
-  );
-}
-
-function openModalWithAnimation() {
-  modal.style.display = 'flex';
-  if (typeof animate !== 'function') return;
-
-  // Use individual transform components — FM DOM requires y/scale, not transform strings
-  animate(modal, { opacity: [0, 1] }, { duration: 0.22, easing: 'ease-out' });
-  animate(
-    modalContent,
-    { opacity: [0, 1], scale: [0.93, 1], y: [20, 0] },
-    { duration: 0.36, easing: [0.22, 1, 0.36, 1] }
-  );
-}
-
-function closeModalWithAnimation() {
-  // Run exit animation if FM is available, then always close via setTimeout
-  if (typeof animate === 'function') {
-    try {
-      animate(modalContent, { opacity: [1, 0], scale: [1, 0.93], y: [0, 12] }, { duration: 0.18, easing: 'ease-in' });
-      animate(modal, { opacity: [1, 0] }, { duration: 0.2, easing: 'ease-in' });
-    } catch (e) { /* ignore FM errors */ }
-  }
-
-  setTimeout(() => {
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-    // Clear any FM inline styles so the next open starts from a clean state
-    modal.style.opacity = '';
-    modalContent.style.opacity = '';
-    modalContent.style.transform = '';
-  }, typeof animate === 'function' ? 220 : 0);
-}
-
-// ============================================================
-// FLOATING BACKGROUND
-// ============================================================
+/**
+ * Dynamically generate high-density floating background elements
+ */
 function setupFloatingBackground() {
   const container = document.getElementById('floatingBg');
   if (!container) return;
 
-  const count = 60;
+  const count = 60; // 50+ as requested
   const fragments = document.createDocumentFragment();
 
   for (let i = 0; i < count; i++) {
@@ -526,12 +431,12 @@ function setupFloatingBackground() {
 
     item.src = isMushroom ? 'images/bg/mushroom.png' : 'images/bg/pepper.png';
     item.className = `floating-item ${isMushroom ? 'mushroom' : 'pepper'}`;
-    item.alt = '';
 
+    // Randomize positioning
     const top = Math.random() * 100;
     const left = Math.random() * 100;
-    const delay = Math.random() * -20;
-    const duration = 15 + Math.random() * 20;
+    const delay = Math.random() * -20; // Negative delay so they start at different states
+    const duration = 15 + Math.random() * 20; // 15s to 35s
 
     item.style.top = `${top}%`;
     item.style.left = `${left}%`;
@@ -544,9 +449,10 @@ function setupFloatingBackground() {
   container.appendChild(fragments);
 }
 
-// ============================================================
-// RENDER PIZZAS
-// ============================================================
+
+/**
+ * Render Pizza Cards
+ */
 function renderPizzas() {
   pizzaGrid.innerHTML = '';
 
@@ -554,6 +460,7 @@ function renderPizzas() {
     currentCategory === 'all' || item.category === currentCategory
   );
 
+  // Group items by category if "All" is selected
   const groups = {};
   if (currentCategory === 'all') {
     filteredItems.forEach(item => {
@@ -564,63 +471,64 @@ function renderPizzas() {
     groups[currentCategory] = filteredItems;
   }
 
+  // Iterate through groups and render
   Object.keys(groups).forEach((catKey) => {
     const groupItems = groups[catKey];
     if (groupItems.length === 0) return;
 
+    // Add Category Header (Only if multiple categories are visible or if filtered)
     const header = document.createElement('div');
     header.className = 'category-group-header animate-fade-in category-section';
-    header.id = `cat-${catKey}`;
-    const catName = categoryConfig[catKey]
-      ? (currentLang === 'ar' ? categoryConfig[catKey].ar : categoryConfig[catKey].en)
-      : catKey;
+    header.id = `cat-${catKey}`; // Anchor for ScrollSpy
+    const catName = categoryConfig[catKey] ?
+      (currentLang === 'ar' ? categoryConfig[catKey].ar : categoryConfig[catKey].en) :
+      catKey;
     header.innerHTML = `<h2>${catName}</h2><div class="header-line"></div>`;
     pizzaGrid.appendChild(header);
 
-    groupItems.forEach((item) => {
+    groupItems.forEach((item, index) => {
       const card = document.createElement('div');
       card.className = 'pizza-card animate-fade-in';
+      card.style.animationDelay = `${index * 0.05}s`;
 
       const name = currentLang === 'ar' ? item.name_ar : item.name_en;
       const desc = currentLang === 'ar' ? item.desc_ar : item.desc_en;
 
       let priceDisplay = '';
       if (item.prices) {
-        priceDisplay = currentLang === 'ar'
-          ? `بدءاً من ${formatPrice(item.prices.small)}`
-          : `From ${formatPrice(item.prices.small)}`;
+        const minPrice = item.prices.small;
+        priceDisplay = currentLang === 'ar' ? `بدءاً من ${formatPrice(minPrice)}` : `From ${formatPrice(minPrice)}`;
       } else {
         priceDisplay = formatPrice(item.price);
       }
 
       card.innerHTML = `
-        <div class="pizza-img-box" onclick="openItemDetails(${item.id})">
-          <img src="${item.image}" alt="${name}" class="pizza-img"
-            onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000'">
-        </div>
-        <div class="pizza-content">
-          <h3 class="pizza-title">${name}</h3>
-          <p class="pizza-desc">${desc}</p>
-          <div class="pizza-footer">
-            <span class="pizza-price">${priceDisplay}</span>
-            <button class="btn-order" onclick="openItemDetails(${item.id})">
-              ${currentLang === 'ar' ? 'التفاصيل' : 'Details'}
-            </button>
-          </div>
-        </div>
-      `;
+              <div class="pizza-img-box" onclick="openItemDetails(${item.id})">
+                  <img src="${item.image}" alt="${name}" class="pizza-img" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1000'">
+              </div>
+              <div class="pizza-content">
+                  <h3 class="pizza-title">${name}</h3>
+                  <p class="pizza-desc">${desc}</p>
+                  <div class="pizza-footer">
+                      <span class="pizza-price">${priceDisplay}</span>
+                      <button class="btn-order" onclick="openItemDetails(${item.id})">
+                          ${currentLang === 'ar' ? 'التفاصيل' : 'Details'}
+                      </button>
+                  </div>
+              </div>
+          `;
 
       pizzaGrid.appendChild(card);
     });
   });
 
+  // Re-initialize ScrollSpy after rendering
   setupCategoryScrollSpy();
-  animateNewCards();
 }
 
-// ============================================================
-// MODAL
-// ============================================================
+/**
+ * Open Modal with Item Details
+ */
 window.openItemDetails = function (id) {
   const item = menuData.find(p => p.id === id);
   if (!item) return;
@@ -634,6 +542,8 @@ window.openItemDetails = function (id) {
 
   const priceContainer = document.getElementById('modalPizzaPrice');
   const crustContainer = document.getElementById('modalPizzaCrust');
+
+  // Reset crust container
   crustContainer.innerHTML = '';
 
   function getPriceHtml(price) {
@@ -653,52 +563,61 @@ window.openItemDetails = function (id) {
   }
 
   if (item.prices) {
+    // Show sizes + Initial Small price
+    const initialPrice = item.prices.small;
     priceContainer.innerHTML = `
-      ${getPriceHtml(item.prices.small)}
-      <div class="size-selector">
-        <button class="size-btn active" onclick="updatePrice(this,${item.id},'small',${item.prices.small})">
-          ${currentLang === 'ar' ? 'صغير' : 'Small'}
-        </button>
-        <button class="size-btn" onclick="updatePrice(this,${item.id},'medium',${item.prices.medium})">
-          ${currentLang === 'ar' ? 'وسط' : 'Medium'}
-        </button>
-        <button class="size-btn" onclick="updatePrice(this,${item.id},'large',${item.prices.large})">
-          ${currentLang === 'ar' ? 'كبير' : 'Large'}
-        </button>
-      </div>
+        ${getPriceHtml(initialPrice)}
+        <div class="size-selector">
+            <button class="size-btn active" data-size="small" onclick="updatePrice(${item.id}, 'small', ${item.prices.small}, this)">${currentLang === 'ar' ? 'صغير' : 'Small'}</button>
+            <button class="size-btn" data-size="medium" onclick="updatePrice(${item.id}, 'medium', ${item.prices.medium}, this)">${currentLang === 'ar' ? 'وسط' : 'Medium'}</button>
+            <button class="size-btn" data-size="large" onclick="updatePrice(${item.id}, 'large', ${item.prices.large}, this)">${currentLang === 'ar' ? 'كبير' : 'Large'}</button>
+        </div>
     `;
+
+    // Add Crust Options for Pizzas
     crustContainer.innerHTML = `
-      <span class="modal-info-label">${currentLang === 'ar' ? 'نوع العجينة' : 'Crust Type'}</span>
-      <div class="crust-selector">
-        <button class="crust-btn active" onclick="selectCrust(this)">
-          ${currentLang === 'ar' ? 'اورجينال' : 'Original'}
-        </button>
-        <button class="crust-btn" onclick="selectCrust(this)">
-          ${currentLang === 'ar' ? 'رقيقة' : 'Thin'}
-        </button>
-      </div>
+        <span class="modal-info-label">${currentLang === 'ar' ? 'نوع العجينة' : 'Crust Type'}</span>
+        <div class="crust-selector">
+            <button class="crust-btn active" onclick="selectCrust(this)">
+                <img src="images/pizzas/عجينة اورجينال.png" alt="${currentLang === 'ar' ? 'اورجينال' : 'Original'}" class="crust-img">
+                <span>${currentLang === 'ar' ? 'اورجينال' : 'Original'}</span>
+            </button>
+            <button class="crust-btn" onclick="selectCrust(this)">
+                <img src="images/pizzas/عجينة رقيقة.png" alt="${currentLang === 'ar' ? 'رقيقة' : 'Thin'}" class="crust-img">
+                <span>${currentLang === 'ar' ? 'رقيقة' : 'Thin'}</span>
+            </button>
+        </div>
     `;
   } else {
     priceContainer.innerHTML = getPriceHtml(item.price);
   }
 
+  modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
-  openModalWithAnimation();
 };
 
+/**
+ * Handle Crust Selection
+ */
 window.selectCrust = function (btn) {
   const container = btn.closest('.crust-selector');
   container.querySelectorAll('.crust-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 };
 
-window.updatePrice = function (btn, id, _size, price) {
+window.updatePrice = function (id, size, price, button) {
   const item = menuData.find(p => p.id === id);
   if (!item || !item.prices) return;
 
-  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  // Update active class
+  const selectedButton = button || document.querySelector(`.size-btn[data-size="${size}"]`);
+  const selector = selectedButton ? selectedButton.closest('.size-selector') : null;
+  if (selector) {
+    selector.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+    selectedButton.classList.add('active');
+  }
 
+  // Update Dual Price Display
   const oldSyp = price * 100;
   const wrapper = document.querySelector('.dual-price-wrapper');
   if (wrapper) {
@@ -715,11 +634,12 @@ window.updatePrice = function (btn, id, _size, price) {
   }
 };
 
-// ============================================================
-// EVENT LISTENERS
-// ============================================================
+
+/**
+ * Setup Event Listeners
+ */
 function setupEventListeners() {
-  // Language toggle
+  // Language Toggle
   langButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       langButtons.forEach(b => b.classList.remove('active'));
@@ -732,11 +652,12 @@ function setupEventListeners() {
     });
   });
 
-  // Category filter
+  // Category Filter
   filterTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const category = tab.dataset.category;
 
+      // If already in 'all' mode and clicking a category, scroll to it
       if (currentCategory === 'all' && category !== 'all') {
         const targetSection = document.getElementById(`cat-${category}`);
         if (targetSection) {
@@ -750,39 +671,55 @@ function setupEventListeners() {
       currentCategory = category;
       renderPizzas();
 
+      // If switched to 'all', scroll to top of menu
       if (category === 'all') {
         const menuTop = document.querySelector('.menu-section').offsetTop;
-        window.scrollTo({ top: menuTop - 80, behavior: 'smooth' });
+        window.scrollTo({
+          top: menuTop - 80,
+          behavior: 'smooth'
+        });
       }
     });
   });
 
-  // Close modal
-  closeModalBtn.addEventListener('click', closeModalWithAnimation);
-
-  window.addEventListener('click', (event) => {
-    if (event.target === modal) closeModalWithAnimation();
+  // Close Modal
+  closeModal.addEventListener('click', () => {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
   });
 
-  // Header location shortcut
+  window.onclick = (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  };
+
+  // Header Location Shortcut
   const headerLocationBtn = document.getElementById('headerLocationBtn');
   if (headerLocationBtn) {
     headerLocationBtn.addEventListener('click', () => {
       const locationSection = document.getElementById('location');
-      if (locationSection) locationSection.scrollIntoView({ behavior: 'smooth' });
+      if (locationSection) {
+        locationSection.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   }
 }
 
+/**
+ * Update non-dynamic UI text based on language
+ */
 function updateStaticText() {
   document.querySelectorAll('[data-ar]').forEach(el => {
     el.innerText = el.getAttribute(`data-${currentLang}`);
   });
 }
 
-// ============================================================
-// HERO SCROLL — Canvas Sequence Player
-// ============================================================
+/**
+ * Pro Pizza Scroll Animation Logic (Canvas Sequence Player)
+ * Features: High-performance Canvas, Smooth Interpolation, and Unified UI Sync
+ */
 function setupProScrollAnimation() {
   const container = document.querySelector('.pizza-scroll-container');
   const canvas = document.getElementById('pizzaCanvas');
@@ -796,18 +733,24 @@ function setupProScrollAnimation() {
 
   const frameCount = 56;
   const framePath = 'images/pizza cut in half/ezgif-frame-';
-  const frames = [];
+  const frames = []; // Stores processed transparent canvases
   let imagesLoaded = 0;
+
+  // Optimized smoothing state
   let scrollProgress = 0;
   let smoothedProgress = 0;
   let currentFrameIndex = -1;
+
+  // Smoothing constant (0.1 for high-end inertia)
   const lerpFactor = 0.1;
 
+  // Chroma Key processing
   const tempCanvas = document.createElement('canvas');
   tempCanvas.width = canvas.width;
   tempCanvas.height = canvas.height;
   const tCtx = tempCanvas.getContext('2d');
 
+  // 1. Preload and Process frames
   for (let i = 1; i <= frameCount; i++) {
     const img = new Image();
     const frameNum = i.toString().padStart(3, '0');
@@ -817,9 +760,11 @@ function setupProScrollAnimation() {
       try {
         tCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
         tCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
+
         const imageData = tCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
         const data = imageData.data;
 
+        // Chroma Key: Black to Transparent
         for (let j = 0; j < data.length; j += 4) {
           if (data[j] < 20 && data[j + 1] < 20 && data[j + 2] < 20) {
             data[j + 3] = 0;
@@ -833,27 +778,36 @@ function setupProScrollAnimation() {
         offscreen.getContext('2d').drawImage(tempCanvas, 0, 0);
         frames[index] = offscreen;
       } catch (e) {
+        console.warn("Falling back to CSS blending.");
         canvas.style.mixBlendMode = 'screen';
         frames[index] = img;
       }
 
       imagesLoaded++;
-      if (imagesLoaded === frameCount) startAnimationLoop();
+      if (imagesLoaded === frameCount) {
+        startAnimationLoop();
+      }
     };
     img.src = `${framePath}${frameNum}.jpg`;
   }
 
+  // 2. Optimized Scroll Listener
   window.addEventListener('scroll', () => {
     const rect = container.getBoundingClientRect();
     const progress = -rect.top / (rect.height - window.innerHeight);
     scrollProgress = Math.max(0, Math.min(1, progress));
   }, { passive: true });
 
+  // 3. Smooth Animation Loop (Time-independent)
   function startAnimationLoop() {
     function render() {
+      // Apply linear interpolation for buttery smoothness
       smoothedProgress += (scrollProgress - smoothedProgress) * lerpFactor;
+
+      // Map to frame index
       const targetFrame = Math.round(smoothedProgress * (frameCount - 1));
 
+      // Only redraw if frame changed
       if (targetFrame !== currentFrameIndex) {
         currentFrameIndex = targetFrame;
         const frame = frames[currentFrameIndex];
@@ -863,81 +817,103 @@ function setupProScrollAnimation() {
         }
       }
 
+      // Sync UI elements to the SMOOTHED progress
       updateUIStates(smoothedProgress);
+
       requestAnimationFrame(render);
     }
     render();
   }
 
   function updateUIStates(progress) {
-    // Left pill
+    // Dynamic Scaled Side Pills - "Rise and Disappear" Effect
+    // Pill 1 (Left Content) - Centered, Vertical Rise Only
     const p1Start = 0.1, p1End = 0.5;
     const p1Factor = Math.max(0, Math.min(1, (progress - p1Start) / (p1End - p1Start)));
     const p1Alpha = p1Factor > 0 && p1Factor < 1 ? Math.sin(Math.PI * p1Factor) : 0;
     const p1Rise = 300 - (p1Factor * 800);
+
     pillLeft.style.opacity = p1Alpha;
-    pillLeft.style.transform = `translate(-50%, calc(-50% + ${p1Rise}px)) scale(${1 + p1Alpha * 0.1})`;
+    pillLeft.style.transform = `translate(-50%, calc(-50% + ${p1Rise}px)) scale(${1 + (p1Alpha * 0.1)})`;
     pillLeft.style.visibility = p1Alpha > 0.01 ? 'visible' : 'hidden';
 
-    // Right pill
+    // Pill 2 (Right Content) - Centered, Vertical Rise Only
     const p2Start = 0.4, p2End = 0.8;
     const p2Factor = Math.max(0, Math.min(1, (progress - p2Start) / (p2End - p2Start)));
     const p2Alpha = p2Factor > 0 && p2Factor < 1 ? Math.sin(Math.PI * p2Factor) : 0;
     const p2Rise = 300 - (p2Factor * 800);
+
     pillRight.style.opacity = p2Alpha;
-    pillRight.style.transform = `translate(-50%, calc(-50% + ${p2Rise}px)) scale(${1 + p2Alpha * 0.1})`;
+    pillRight.style.transform = `translate(-50%, calc(-50% + ${p2Rise}px)) scale(${1 + (p2Alpha * 0.1)})`;
     pillRight.style.visibility = p2Alpha > 0.01 ? 'visible' : 'hidden';
 
-    // Pizza scale
-    const scaleProgress = Math.max(0, Math.min(1, progress / 0.5));
-    animationBox.style.transform = `scale(${1 + scaleProgress * 0.4})`;
 
-    // Menu section reveal
+    // Pizza Container Expansion
+    const scaleProgress = Math.max(0, Math.min(1, progress / 0.5));
+    animationBox.style.transform = `scale(${1 + (scaleProgress * 0.4)})`;
+
+    // Menu Section Reveal
     const revealThreshold = 0.8;
-    const revealProgress = progress > revealThreshold
-      ? (progress - revealThreshold) / (1 - revealThreshold)
-      : 0;
+    const revealProgress = progress > revealThreshold ? (progress - revealThreshold) / (1 - revealThreshold) : 0;
 
     menuSection.style.opacity = revealProgress;
     menuSection.style.transform = `translateY(${(1 - revealProgress) * 150}px)`;
-    menuSection.style.zIndex = revealProgress > 0.9 ? '20' : '10';
+    menuSection.style.zIndex = revealProgress > 0.9 ? "20" : "10";
   }
+
+
 }
 
-// ============================================================
-// CATEGORY SCROLL SPY
-// ============================================================
+// Start User Experience
+init();
+setupProScrollAnimation();
+
+/**
+ * Category ScrollSpy
+ * Automatically highlights the active category in the filter bar during "All" view
+ */
 function setupCategoryScrollSpy() {
+  if (categoryObserver) {
+    categoryObserver.disconnect();
+    categoryObserver = null;
+  }
+
   if (currentCategory !== 'all') return;
+  if (typeof IntersectionObserver === 'undefined') return;
 
   const sections = document.querySelectorAll('.category-section');
   const tabs = document.querySelectorAll('.filter-tab');
 
-  const observer = new IntersectionObserver((entries) => {
+  const observerOptions = {
+    root: null,
+    rootMargin: '-160px 0px -70% 0px', // Adjusted for sticky header
+    threshold: 0
+  };
+
+  categoryObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const id = entry.target.id.replace('cat-', '');
+
         tabs.forEach(tab => {
           if (tab.dataset.category === id) {
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
+
+            // Scroll tab into view if container is overflowing (mobile)
             tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
           }
         });
       }
     });
-  }, {
-    root: null,
-    rootMargin: '-160px 0px -70% 0px',
-    threshold: 0
-  });
+  }, observerOptions);
 
-  sections.forEach(section => observer.observe(section));
+  sections.forEach(section => categoryObserver.observe(section));
 }
 
-// ============================================================
-// BRANCH CONFIG & DIRECTIONS
-// ============================================================
+/**
+ * Branch Configuration for Contact Section
+ */
 const branchConfig = {
   malki: {
     lat: 33.513412554802834,
@@ -958,32 +934,47 @@ const branchConfig = {
 
 let activeBranch = 'malki';
 
+/**
+ * Switch the active branch and update the map
+ */
 window.switchBranch = function (branchKey) {
   if (!branchConfig[branchKey]) return;
+
   activeBranch = branchKey;
 
-  document.querySelectorAll('.branch-item').forEach(item => item.classList.remove('active'));
+  // Update branch item active state
+  document.querySelectorAll('.branch-item').forEach(item => {
+    item.classList.remove('active');
+  });
   const activeEl = document.getElementById(`branch-${branchKey}`);
   if (activeEl) activeEl.classList.add('active');
 
+  // Update Map Iframe
   const mapIframe = document.getElementById('contactMap');
-  if (mapIframe) mapIframe.src = branchConfig[branchKey].mapUrl;
+  if (mapIframe) {
+    mapIframe.src = branchConfig[branchKey].mapUrl;
+  }
 
+  // Smooth scroll to map on mobile
   if (window.innerWidth < 992) {
     const mapCard = document.querySelector('.map-card');
-    if (mapCard) mapCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (mapCard) {
+      mapCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   }
 };
 
+/**
+ * Get Directions to the current active branch
+ * Uses a direct Google Maps URL for reliable redirection on all devices.
+ */
 window.getDirections = function () {
   const config = branchConfig[activeBranch];
-  const url = `https://www.google.com/maps/dir/?api=1&destination=${config.lat},${config.lng}&travelmode=driving`;
+  const restaurantLat = config.lat;
+  const restaurantLng = config.lng;
+
+  // Direct URL avoids async callbacks that mobile browsers often block.
+  // Google Maps automatically handles "Your Location" if origin is omitted.
+  const url = `https://www.google.com/maps/dir/?api=1&destination=${restaurantLat},${restaurantLng}&travelmode=driving`;
   window.open(url, '_blank');
 };
-
-// ============================================================
-// BOOT
-// ============================================================
-init();
-setupProScrollAnimation();
-setupCategoryScrollSpy();

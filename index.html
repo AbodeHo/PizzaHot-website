@@ -36,7 +36,6 @@
 
     <main>
 
-
         <!-- Pro Pizza Scroll Interaction Section -->
         <section class="pizza-scroll-container">
             <div class="sticky-wrapper">
@@ -68,8 +67,8 @@
             <div class="floating-bg" id="floatingBg"></div>
             <div class="container">
                 <!-- Filter Tabs -->
-                <div class="filter-tabs" id="categoryGrid">
-
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-category="all" data-ar="الكل" data-en="All">الكل</button>
                     <button class="filter-tab" data-category="vegetables" data-ar="خضار"
                         data-en="Vegetables">خضار</button>
                     <button class="filter-tab" data-category="chicken" data-ar="دجاج" data-en="Chicken">دجاج</button>
@@ -236,7 +235,7 @@
             <button class="modal-close" id="closeModal">&times;</button>
             <div class="modal-grid">
                 <div class="modal-image-box">
-                    <img id="modalPizzaImg" src="" alt="Pizza Photo" class="pizza-img">
+                    <img id="modalPizzaImg" alt="Pizza Photo" class="pizza-img">
                 </div>
                 <div class="modal-body">
                     <h2 id="modalPizzaName" class="modal-title"></h2>
